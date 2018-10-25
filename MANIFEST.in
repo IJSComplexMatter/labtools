@@ -1,0 +1,6 @@
+include *.txt
+recursive-include doc/build *.*
+recursive-include doc/source *.txt *.py *.rst *.png
+include doc/*.* 
+include doc/Makefile
+include ez_setup.py
