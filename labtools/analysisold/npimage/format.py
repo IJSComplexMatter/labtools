@@ -29,7 +29,7 @@ def open_bw(filename, size=(1024,1280), bits = 10, order = '>', shift_bits = Tru
     elif bits <= 16:
         dtype = 16
     else:
-        raise ValueError, 'bits must be between 1 and 16 '
+        raise ValueError('bits must be between 1 and 16 ')
     
     a = memmap(filename, dtype = DTYPE[dtype], mode = 'c', shape = size, offset = data_offset)
     a = a.newbyteorder(order)
@@ -200,5 +200,5 @@ class ExtFormat(BaseFormat):
         
 if __name__ == '__main__':
     f = AnyFormat()
-    print f.configure_traits()
+    print(f.configure_traits())
                       

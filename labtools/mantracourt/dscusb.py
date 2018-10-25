@@ -26,14 +26,14 @@ This module defines:
 
 from .conf import *
 if SIMULATE == True:
-    from _test.serial_test import Serial, comports
+    from ._test.serial_test import Serial, comports
 else:
     #from stretcher.serialport import SerialPort as Serial
     from serial import Serial
     from serial.tools.list_ports import comports
 from ..log import create_logger
 import time, sys
-from Queue import Queue
+from queue import Queue
 import re, warnings
 from ..utils.decorators import simple_decorator
 import time
@@ -565,7 +565,7 @@ class DSCUSB:
         try:
             return float(out)
         except ValueError: #out is always float except if DPB set too low, then force it to 0.
-            print 'error'            
+            print('error')            
             return 0.
  
     def get_flag(self):

@@ -191,12 +191,12 @@ class BaseDocstring(object):
         self.index = 0
 
         if self.verbose:
-            print 'INPUT DOCSTRING'
-            print '\n'.join(lines)
+            print('INPUT DOCSTRING')
+            print('\n'.join(lines))
         self.parse()
         if self.verbose:
-            print 'OUTPUT DOCSTRING'
-            print '\n'.join(lines)
+            print('OUTPUT DOCSTRING')
+            print('\n'.join(lines))
 
     def parse(self):
         """ Parse the docstring.
@@ -209,7 +209,7 @@ class BaseDocstring(object):
         self.seek_to_next_non_empty_line()
         while not self.eol:
             if self.verbose:
-                print 'current index is', self.index
+                print('current index is', self.index)
             header = self.is_section()
             if header:
                 self._refactor(header)
@@ -228,8 +228,8 @@ class BaseDocstring(object):
 
         """
         if self.verbose:
-            print 'Header is', header
-            print 'Line is', self.index
+            print('Header is', header)
+            print('Line is', self.index)
 
         refactor_postfix = self.headers.get(header, 'header')
         method_name = ''.join(('_refactor_', refactor_postfix))
@@ -241,7 +241,7 @@ class BaseDocstring(object):
 
         """
         if self.verbose:
-            print 'Refactoring {0}'.format(header)
+            print('Refactoring {0}'.format(header))
         index = self.index
         indent = get_indent(self.peek())
         self.remove_lines(index, 2)
@@ -293,7 +293,7 @@ class BaseDocstring(object):
         #TODO raise error when there is no parameter
 
         if self.verbose:
-            print "PARSING PARAMETERS"
+            print("PARSING PARAMETERS")
 
         if field_check:
             is_field = field_check
@@ -305,7 +305,7 @@ class BaseDocstring(object):
         while (not self.eol) and is_field(self.peek(), indent):
             field = self.get_field()
             if self.verbose:
-                print "next field is: ", field
+                print("next field is: ", field)
             parameters.append(self.parse_field(field))
 
         return parameters
@@ -348,9 +348,9 @@ class BaseDocstring(object):
         else:
             arg_name, arg_type = header, ''
         if self.verbose:
-            print "name is:", arg_name, " type is:", arg_type
-            print "the output of 're.split(' \:\s?', header)' was", \
-                        re.split('\s\:\s?', header, maxsplit=1)
+            print("name is:", arg_name, " type is:", arg_type)
+            print("the output of 're.split(' \:\s?', header)' was", \
+                        re.split('\s\:\s?', header, maxsplit=1))
         if len(lines) > 1:
             lines = [line.rstrip() for line in lines]
             return arg_name.strip(), arg_type.strip(), lines[1:]
@@ -397,7 +397,7 @@ class BaseDocstring(object):
         header = self.peek()
         line2 = self.peek(1)
         if self.verbose:
-            print 'current line is: {0} at index {1}'.format(header, self.index)
+            print('current line is: {0} at index {1}'.format(header, self.index))
 
         # check for underline type format
         underline = re.match(r'\s*\S+\s*\Z', line2)
@@ -522,7 +522,7 @@ class FunctionDocstring(BaseDocstring):
         """Refactor the return section to sphinx friendly format"""
 
         if self.verbose:
-            print 'Returns section refactoring'
+            print('Returns section refactoring')
 
         descriptions = []
         index = self.index
@@ -531,8 +531,8 @@ class FunctionDocstring(BaseDocstring):
         fields = self.extract_fields(indent)
 
         if self.verbose:
-            print 'Return items'
-            print fields
+            print('Return items')
+            print(fields)
 
         # generate sphinx friendly rst
         descriptions = []
@@ -562,7 +562,7 @@ class FunctionDocstring(BaseDocstring):
         """Refactor the raises section to sphinx friendly format"""
 
         if self.verbose:
-            print 'Raised section refactoring'
+            print('Raised section refactoring')
 
         descriptions = []
         index = self.index
@@ -571,8 +571,8 @@ class FunctionDocstring(BaseDocstring):
         fields = self.extract_fields(indent)
 
         if self.verbose:
-            print 'Raised Errors'
-            print fields
+            print('Raised Errors')
+            print(fields)
 
         descriptions = []
         descriptions.append(indent + ':raises:')
@@ -599,7 +599,7 @@ class FunctionDocstring(BaseDocstring):
         """Refactor the events section to sphinx friendly format"""
 
         if self.verbose:
-            print 'Raised section refactoring'
+            print('Raised section refactoring')
 
         descriptions = []
         index = self.index
@@ -608,8 +608,8 @@ class FunctionDocstring(BaseDocstring):
         fields = self.extract_fields(indent)
 
         if self.verbose:
-            print 'Raised Errors'
-            print fields
+            print('Raised Errors')
+            print(fields)
 
         descriptions = []
         descriptions.append(indent + ':events:')
@@ -636,7 +636,7 @@ class FunctionDocstring(BaseDocstring):
         """Refactor the argument section to sphinx friendly format"""
 
         if self.verbose:
-            print '{0} Section'.format(header)
+            print('{0} Section'.format(header))
 
         index = self.index
         self.remove_lines(index, 2)
@@ -662,7 +662,7 @@ class FunctionDocstring(BaseDocstring):
         """Refactor the argument section to sphinx friendly format"""
 
         if self.verbose:
-            print 'Refactoring Notes'
+            print('Refactoring Notes')
 
         descriptions = []
         index = self.index
@@ -694,7 +694,7 @@ class ClassDocstring(BaseDocstring):
         """Refactor the attributes section to sphinx friendly format"""
 
         if self.verbose:
-            print '{0} Section'.format(header)
+            print('{0} Section'.format(header))
 
         index = self.index
         self.remove_lines(index, 2)
@@ -721,7 +721,7 @@ class ClassDocstring(BaseDocstring):
     def _refactor_methods(self, header):
         """Refactor the attributes section to sphinx friendly format"""
         if self.verbose:
-            print '{0} section'.format(header)
+            print('{0} section'.format(header))
 
         index = self.index
         self.remove_lines(index, 2)
@@ -770,7 +770,7 @@ class ClassDocstring(BaseDocstring):
 
         """
         if self.verbose:
-            print '{0} Section'.format(header)
+            print('{0} Section'.format(header))
         descriptions = []
         index = self.index
         self.remove_lines(index, 2)
@@ -835,13 +835,13 @@ class ClassDocstring(BaseDocstring):
         """Refactor the argument section to sphinx friendly format"""
 
         if self.verbose:
-            print '{0} Section'.format(header)
+            print('{0} Section'.format(header))
 
         index = self.index
         self.remove_lines(index, 2)
         indent = get_indent(self.peek())
         parameters = self.extract_fields(indent)
-        print parameters
+        print(parameters)
 
         descriptions = []
         for arg_name, arg_type, desc in parameters:

@@ -1,6 +1,6 @@
 from labtools.utils.decorators import simple_decorator
 from labtools.log import create_logger
-from Queue import Queue
+from queue import Queue
 
 logger = create_logger(__name__)
 

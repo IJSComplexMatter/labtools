@@ -77,15 +77,15 @@ class _RotatorGenerator(Generator):
     def create(self, n_runs, **kw):
         if self.change == 'arm':
             if self.mode == 'manual':
-                return [self.get_parameters(arm = self.arm + self.step * i, sample = self.sample) for i in xrange(n_runs)]
+                return [self.get_parameters(arm = self.arm + self.step * i, sample = self.sample) for i in range(n_runs)]
             else:
-                return [self.get_parameters(arm = self.arm + self.step * i, sample = (self.arm + self.step  * i)/2.) for i in xrange(n_runs)]
+                return [self.get_parameters(arm = self.arm + self.step * i, sample = (self.arm + self.step  * i)/2.) for i in range(n_runs)]
 
         else:
             if self.mode == 'manual':
-                return [self.get_parameters(arm = self.arm, sample = self.sample + self.step * i) for i in xrange(n_runs)]
+                return [self.get_parameters(arm = self.arm, sample = self.sample + self.step * i) for i in range(n_runs)]
             else:
-                return [self.get_parameters(arm = (self.sample + self.step * i) * 2., sample = self.sample + self.step * i) for i in xrange(n_runs)]
+                return [self.get_parameters(arm = (self.sample + self.step * i) * 2., sample = self.sample + self.step * i) for i in range(n_runs)]
 
 class _Rotator(RotatorUI):
     def run(self, obj,  index, parameters, **kw):

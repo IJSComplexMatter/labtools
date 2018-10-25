@@ -17,7 +17,7 @@ SLEEP = 0.8
 MOTORSTEP = 0.5 / (28./12.)**4 / 2000 # (thread) / (gear ratio) / (sensor resolution)
 
 ERR = 0.005 #expected measurement error. 
-print 'Steps per mm: ', 1/MOTORSTEP
+print('Steps per mm: ', 1/MOTORSTEP)
 
 DATANAME = 'm2data.txt'
 
@@ -94,22 +94,22 @@ data = []
 
 for i,x in enumerate(POSITIONS):
     sleep = SLEEP
-    print 'Run %i of %i.\n    Move to: %f' % (i, N, x)
+    print('Run %i of %i.\n    Move to: %f' % (i, N, x))
     translator.write('MA%i' % int(x/MOTORSTEP))
     if i == 0:
         time.sleep(4*SLEEP)
     out = -1.
-    print '    Waiting for power to stabilize (max %f seconds)' % (SLEEP * 10)
+    print('    Waiting for power to stabilize (max %f seconds)' % (SLEEP * 10))
     for j in range(10):
         time.sleep(SLEEP)
         err = abs(out - power.ask_value('fetch:next?'))
         if err <= ERR:
             out = power.ask_value('fetch:next?')
-            print '    Done! Measured: %f Watts.' % out
+            print('    Done! Measured: %f Watts.' % out)
             data.append(out)
             break
         elif j == 9:
-            print '    Power is not stable!'
+            print('    Power is not stable!')
             data.append(power.ask_value('fetch:next?'))
             break
         else:
@@ -126,7 +126,7 @@ data = np.array([POSITIONS, data]).transpose()
 np.savetxt(DATANAME, data)
 
 popt, cov = curve_fit(ERF, data[:,0], data[:,1],[0.2,0,1.5])
-print popt
+print(popt)
 plt.clf()
 plt.plot(data[:,0], data[:,1],'ko')
 plt.plot(data[:,0], ERF(data[:,0], *popt))

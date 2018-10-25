@@ -17,7 +17,7 @@ try:
     from pyvisa.vpp43 import visa_library
     visa_library.load_library("agvisa32.dll")
     from visa import get_instruments_list, instrument, VisaIOError, Instrument
-    print 'OK'
+    print('OK')
 except:
     import warnings
     warnings.warn('pyvisa could not load, does agvisa32.dll exist?', ImportWarning)

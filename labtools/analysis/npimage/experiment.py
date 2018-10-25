@@ -5,9 +5,9 @@ from enthought.traits.api import *
 from enthought.traits.ui.api import *
 from enthought.pyface.api import FileDialog, OK
 
-from selection import RectangleSelection
+from .selection import RectangleSelection
 from numpy import indices, zeros
-import base_fit
+from . import base_fit
 import pickle
 
 def _get(object,name):
@@ -34,7 +34,7 @@ def results_view_item(name):
                 springy = True)
 
 def results_view(names):
-    group = map(results_view_item, names)
+    group = list(map(results_view_item, names))
     return View(HGroup(Group(*group, springy = True), 
     
  #                      Group(Item('excluded_parameters', show_label = False,style = 'custom'), label = 'Excluded from fit')
@@ -69,12 +69,12 @@ class Results(HasTraits):
         return self.view
         
     def add_parameters(self, **parameters):
-        for name, value in parameters.items():
+        for name, value in list(parameters.items()):
             self.add_trait(name,Float)
             self.add_trait('is_' + name + '_constant', Bool)
             setattr(self,name,value)
             self.add_trait('is_' + name + '_constant', Bool)
-        self.parameters = parameters.keys()
+        self.parameters = list(parameters.keys())
         self.view = results_view(sorted(parameters.keys()))
 
     def get_parameters(self):

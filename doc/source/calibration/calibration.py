@@ -24,23 +24,23 @@ def main():
     dsc = DSCUSB() # creates an instance of DSCUSB for force measurements
     dsc.init() #initialize: open port and set things up.
     homepos = translator.tell() / 1000. # tell() returns microns
-    print 'Motor home position is %f' % homepos
+    print('Motor home position is %f' % homepos)
     results = []
     try:
         for i in range(1000):
-            print 'run %i of 1000' % i
-            print 'move to %i' % POS1
+            print('run %i of 1000' % i)
+            print('move to %i' % POS1)
             translator.move(POS1)
             translator.wait()
-            print 'Waiting for %i second' % SLEEP
+            print('Waiting for %i second' % SLEEP)
             time.sleep(SLEEP) # wait SLEEP seconds
             f = dsc.get_mvv()
             temp = dsc.get_temp()
             results.append([POS1, time.time(), temp, f])
-            print 'move to %i' % POS2
+            print('move to %i' % POS2)
             translator.move(POS2)
             translator.wait()
-            print 'Waiting for 1 s'
+            print('Waiting for 1 s')
             time.sleep(1) # wait 
             f = dsc.get_mvv()
             results.append([POS2, time.time(), temp, f])

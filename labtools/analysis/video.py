@@ -133,7 +133,7 @@ class Video(HasTraits):
         self._iteration_start = True
         return self
     
-    def next(self):
+    def __next__(self):
         try:
             if self._iteration_start:
                 self._iteration_start = False

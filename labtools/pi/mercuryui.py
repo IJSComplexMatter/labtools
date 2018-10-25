@@ -1,4 +1,4 @@
-from mercury import C862Translator, C862, find_port, TIMEOUT, Serial
+from .mercury import C862Translator, C862, find_port, TIMEOUT, Serial
 from labtools.utils.display_message import display_exception
 from labtools.utils.translatorui import BaseTranslatorUI
 from labtools.utils.instrui import BaseRawControllerUI
@@ -46,7 +46,7 @@ class MercurySerial(SerialUI):
 class C862UI(C862,BaseRawControllerUI):
     """This class can be used as C862. It adds a gui layer"""  
     logger = logger
-    device = Enum(range(16), desc = 'device number')
+    device = Enum(list(range(16)), desc = 'device number')
     def _serial_default(self):
         return MercurySerial(timeout = TIMEOUT)      
         
@@ -63,7 +63,7 @@ class C862UI(C862,BaseRawControllerUI):
 class C862TranslatorUI(C862Translator,BaseTranslatorUI):
     """This class can be used as C862Translator. It adds a gui layer"""    
     logger = logger
-    device = Enum(range(16), desc = 'device number')
+    device = Enum(list(range(16)), desc = 'device number')
     serial = Instance(SerialUI,(),transient = True)
     settings = Instance(MotorSettings,())
     
@@ -80,7 +80,7 @@ class C862TranslatorUI(C862Translator,BaseTranslatorUI):
         state, err = self.get_status()
         stopped = state[0]['Trajectory complete']
         report['moving'] = not stopped
-        messages = [key for key, value in state[4].iteritems() if value == True]
+        messages = [key for key, value in state[4].items() if value == True]
         if messages != []:
             report['alarm'] = True
         else:

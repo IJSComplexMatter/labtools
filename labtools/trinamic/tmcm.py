@@ -22,14 +22,15 @@ from serial.tools.list_ports import comports
 from labtools.log import create_logger
 from .conf import TIMEOUT,STATUS_MESSAGES, STEPSIZE, LOGLEVEL
 
-from Queue import Queue
+from queue import Queue
+from functools import reduce
 
 logger = create_logger(__name__, LOGLEVEL)
 
 def checksum(st):
     """Performs checksum of a command
     """
-    return reduce(lambda x,y:x+y, map(ord, st))
+    return reduce(lambda x,y:x+y, list(map(ord, st)))
 
 def create_command(address = 1, number = 0, typ = 0, motor = 0, value = 0):
     """

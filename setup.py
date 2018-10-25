@@ -23,7 +23,7 @@ docdir = 'doc/build/html'
 datafiles = []
 for root, dirnames, filenames in os.walk(docdir):
     datafiles.append((root.replace('/build/html', ''),glob.glob(root + "/*.*")))
-EXCLUDE_PACKAGES = ['labtools.dde', 'labtools.pixelink']
+EXCLUDE_PACKAGES = ['labtools.pixelink']
 
 
 
@@ -31,9 +31,9 @@ for p in EXCLUDE_PACKAGES:
     packages.remove(p)
 
 if platform.system() == 'Windows':
-    SCRIPTS = ['labtools_install.py',]#,'scripts/experiment.py']
+    SCRIPTS = ['scripts/labtools_install.py',]#,'scripts/experiment.py']
 else:
-    SCRIPTS = ['labtools_install.py',]
+    SCRIPTS = ['scripts/labtools_install.py',]
 
 setup(name = 'labtools',
       version = labtools.__version__,

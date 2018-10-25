@@ -13,7 +13,7 @@ HEADER_PATH = ''
 from ctypes.util import find_library
 
 LIBRARY= find_library('PxLAPI40')
-print LIBRARY
+print(LIBRARY)
 from ctypeslib import h2xml, xml2py
 time.sleep(2)
 LIBRARY_PATH, LIBRARY_NAME = os.path.split(LIBRARY)
@@ -160,9 +160,9 @@ def generate_code():
             '-o', module_path,
             '-r%s' % symbols_expressions,
             '%s.xml' % header_basename]
-    print 'xml2py',argv,'\n\n'
+    print('xml2py',argv,'\n\n')
     xml2py.main(argv)
-    print '\ndone\n'
+    print('\ndone\n')
 
 def main():
     #clean_headers()

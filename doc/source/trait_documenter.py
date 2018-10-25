@@ -11,7 +11,7 @@ import sys
 import inspect
 import tokenize
 import token
-import StringIO
+import io
 
 from sphinx.ext.autodoc import ClassLevelDocumenter
 
@@ -88,7 +88,7 @@ class TraitDocumenter(ClassLevelDocumenter):
         # this used to only catch SyntaxError, ImportError and
         # AttributeError, but importing modules with side effects can raise
         # all kinds of errors.
-        except Exception, err:
+        except Exception as err:
             if self.env.app and not self.env.app.quiet:
                 self.env.app.info(traceback.format_exc().rstrip())
             msg = ('autodoc can\'t import/find {0} {r1}, it reported error: '
@@ -105,7 +105,7 @@ class TraitDocumenter(ClassLevelDocumenter):
         """
         ClassLevelDocumenter.add_directive_header(self, sig)
         definition = self._get_trait_definition()
-        self.add_line(u'   :annotation: = {0}'.format(definition),
+        self.add_line('   :annotation: = {0}'.format(definition),
                       '<autodoc>')
 
     ### Private Interface #####################################################
@@ -116,14 +116,14 @@ class TraitDocumenter(ClassLevelDocumenter):
 
         # Get the class source and tokenize it.
         source = inspect.getsource(self.parent)
-        string_io = StringIO.StringIO(source)
+        string_io = io.StringIO(source)
         tokens = tokenize.generate_tokens(string_io.readline)
 
         # find the trait definition start
         trait_found = False
         name_found = False
         while not trait_found:
-            item = tokens.next()
+            item = next(tokens)
             if name_found and item[:2] == (token.OP, '='):
                 trait_found = True
                 continue

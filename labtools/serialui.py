@@ -3,7 +3,7 @@ from traits.api import HasTraits, Trait, Enum,Range, Instance, Property, Bool,\
             Button, Any, List, cached_property, on_trait_change
 
 
-from serial_visa import SerialInstrument, get_instruments_list
+from .serial_visa import SerialInstrument, get_instruments_list
 from serial import PARITY_NAMES, Serial
 
 from labtools.log import create_logger
@@ -119,7 +119,7 @@ class SerialUI(BasePort):
     #: port bytesize
     bytesize = Enum(8, Serial.BYTESIZES)
     #: parity setting
-    parity = Trait('None', dict(zip(PARITY_NAMES.values(),PARITY_NAMES.keys())))
+    parity = Trait('None', dict(list(zip(list(PARITY_NAMES.values()),list(PARITY_NAMES.keys())))))
     #: stopbits setting
     stopbits = Enum(1, Serial.STOPBITS)
     

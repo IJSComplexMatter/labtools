@@ -6,7 +6,7 @@ from labtools.utils.display_message import  display_exception
 
 from pyface.api import confirm, YES
 
-from instrui import BaseDeviceUI, device_group, status_group
+from .instrui import BaseDeviceUI, device_group, status_group
 
 position_view = View(
     HGroup(   

@@ -1,4 +1,4 @@
-from tmcm import TMCM310Motor, find_port, TIMEOUT, Serial, STEPSIZE
+from .tmcm import TMCM310Motor, find_port, TIMEOUT, Serial, STEPSIZE
 from labtools.utils.display_message import display_exception
 from labtools.utils.translatorui import BaseMotorUI
 from labtools.utils.serialui import SerialUI

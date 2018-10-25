@@ -60,7 +60,7 @@ def _get(device,fget,struct):
     return _dict(struct)
 
 def _set_parms(struct,**kw):
-    for key, value in kw.items():
+    for key, value in list(kw.items()):
         getattr(struct, key) #raises AttributeError if parameter does not exist
         setattr(struct,key, value)
     return struct

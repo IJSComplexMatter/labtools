@@ -365,10 +365,10 @@ class C862Translator(C862):
         """
         logger.info('Setting parameters of device %i.' % self.device)
         D = {'acceleration' : 'SA%i', 'velocity' : 'SV%i'}
-        for key in p.keys():
-            if key not in D.keys():
+        for key in list(p.keys()):
+            if key not in list(D.keys()):
                 raise ValueError('Unknown parameter')
-        for key, value in p.iteritems():
+        for key, value in p.items():
             self.write(D[key] % value)
         return self.get_parameters()
                 
@@ -503,7 +503,7 @@ def _format_command(command, ID):
     """
     if len(command) != 1:
         command += '\r'
-    return '\x01' + hex(ID)[-1] + command
+    return b'\x01' + hex(ID)[-1] + command
         
 def main(options):
     """Main program for PI control. Options must be a valid ArgumentParser options
@@ -518,28 +518,28 @@ def main(options):
     c.init(options.port)
     try:
         if options.tell:
-            print 'Current position: %f' % c.tell()
+            print('Current position: %f' % c.tell())
         elif options.home:
-            print 'Moving to home position'
+            print('Moving to home position')
             c.home()
             c.wait()
         elif options.define:
-            print 'Defining home position'
+            print('Defining home position')
             c.set_zero()
         elif options.move is not None:
             if options.relative == True:  
-                print 'Moving by %f' % options.move
+                print('Moving by %f' % options.move)
                 c.move(options.move, relative = True)  
                 c.wait()
             else:
-                print 'Moving to %f' % options.move 
+                print('Moving to %f' % options.move) 
                 c.move(options.position, relative = False)
                 c.wait()
         elif options.write:
-            print 'Executing raw string'
+            print('Executing raw string')
             out = c.ask(options.write)
             if out:
-                print out.strip()
+                print(out.strip())
             c.wait()
         else:
             return 2

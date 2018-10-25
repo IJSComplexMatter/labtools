@@ -20,7 +20,7 @@ This module defines:
 
 from labtools.log import create_logger
 import time, sys
-from Queue import Queue
+from queue import Queue
 import re, warnings
 from labtools.utils.decorators import simple_decorator
 import time

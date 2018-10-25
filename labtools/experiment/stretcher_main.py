@@ -55,12 +55,12 @@ def main():
     if os.path.exists(args.output) and not args.force:
         parser.error('File "%s" exists! Use "-f" option to overwrite.' % args.output)
     if args.abs:
-        print 'Translator will move from %f to %f in %i steps (absolute)' % (positions[0], positions[-1], args.steps)
+        print('Translator will move from %f to %f in %i steps (absolute)' % (positions[0], positions[-1], args.steps))
     else:
-        print 'Translator will move from %f to %f in %i steps (relative)' % (positions[0], positions[-1], args.steps)
-    if raw_input('OK? (default: yes) ').lower() not in ('yes','y','ok',''):
+        print('Translator will move from %f to %f in %i steps (relative)' % (positions[0], positions[-1], args.steps))
+    if input('OK? (default: yes) ').lower() not in ('yes','y','ok',''):
         sys.exit(2)
-    from stress_strain import measure, display, save
+    from .stress_strain import measure, display, save
 
     data = measure(positions = positions, sleep = args.pause,  n = args.n, interval = args.i, ion = ion, relative = not args.abs)
    

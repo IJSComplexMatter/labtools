@@ -6,8 +6,8 @@ other arguments are parameters. Each function has a docstring that represents
 a function as one would write it down on paper
 """
 
-import dls, general, elastomer
+from . import dls, general, elastomer
 
 CATEGORIES = {'dls' : dls, 'general' : general, 'elastomer' : elastomer}
 
-__all__ = CATEGORIES.keys()
+__all__ = list(CATEGORIES.keys())

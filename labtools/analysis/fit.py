@@ -379,7 +379,7 @@ class FitFunction(HasTraits):
             except KeyError:
                 pass
         if kw != {}:
-            raise KeyError, 'parameters %s do not exist' % kw
+            raise KeyError('parameters %s do not exist' % kw)
      
     def reset(self):
         """Resets parameters to defaults
@@ -403,7 +403,7 @@ class FitFunction(HasTraits):
         spec = inspect.getargspec(funct)
         arg_names = spec.args[1:]
         try:
-            defaults = dict(zip(arg_names[-len(spec.defaults):], spec.defaults))
+            defaults = dict(list(zip(arg_names[-len(spec.defaults):], spec.defaults)))
         except TypeError:
             defaults = {}  
         del self.parameters
@@ -622,7 +622,7 @@ class DataFitterPanel(DataFitter):
     
     >>> p,c =  t.fit()
     """
-    category = Enum(CATEGORIES.keys())
+    category = Enum(list(CATEGORIES.keys()))
     function_names = Property(List(Str),depends_on = 'category')
     function_name = Str
     description = DelegatesTo('function')

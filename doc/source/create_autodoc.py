@@ -6,7 +6,7 @@ path
 import os, glob, re, shutil
 from setuptools import find_packages
 
-print 'Copying stress_strain.py'
+print('Copying stress_strain.py')
 shutil.copy(os.path.join('..','..','labtools','experiment','stress_strain.py'),
             os.path.join('examples','stress_strain.py'))
 
@@ -86,21 +86,21 @@ def parse_module(module, package, section = '=', subsection = '-'):
             return ''
 
 
-print 'opening file %s' % INDEX                
+print('opening file %s' % INDEX)                
 with open(INDEX,'w') as fi:
     fi.write(HEADER)
     fi.write('\n' + AUTOMODULE % {'name' : BASE_PACKAGE})
 
     modules = glob.glob('../../%s/*.py' % BASE_PACKAGE)    
     for module in sorted(modules):
-        print 'parsing file %s' % module
+        print('parsing file %s' % module)
         fi.write(parse_module(module, BASE_PACKAGE, subsection = '='))
         
-    print 'Parsing subpackages'
+    print('Parsing subpackages')
     for subpackage in SUBPACKAGES:
         modules = glob.glob('../../%s/*.py' % subpackage.replace('.','/'))
         rst = os.path.join(BASE_PACKAGE, '.'.join(subpackage.split('.')[1:]) + '.rst')
         
         for module in sorted(modules):
-            print 'parsing file %s' % module
+            print('parsing file %s' % module)
             fi.write(parse_module(module, subpackage))

@@ -60,7 +60,7 @@ class PowerMeterSerial(SerialUI):
 class PowerMeterUIRaw(PowerMeter,BaseRawControllerUI):
     """This class can be used as PowerMeter. It adds a gui layer"""  
     logger = logger
-    device = Enum(range(16), desc = 'device number')
+    device = Enum(list(range(16)), desc = 'device number')
     
     def _serial_default(self):
         return PowerMeterSerial(timeout = TIMEOUT)      

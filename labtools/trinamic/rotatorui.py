@@ -9,7 +9,7 @@ This is a GUI version of the  Trinamic rotator controller for DLS experiments. I
 goniometer.
 """
 
-from tmcm import TMCM310Motor, find_port, TIMEOUT, Serial
+from .tmcm import TMCM310Motor, find_port, TIMEOUT, Serial
 from labtools.utils.instrui import BaseDeviceUI, device_group, status_group
 from labtools.utils.translatorui import TargetPosition as _TargetPosition
 from labtools.utils.serialui import SerialUI

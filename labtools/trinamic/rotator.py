@@ -10,7 +10,7 @@ goniometer .
    
 """
 
-from tmcm import TMCM310Motor,  TIMEOUT, Serial
+from .tmcm import TMCM310Motor,  TIMEOUT, Serial
 from labtools.log import create_logger
 from .conf import LOGLEVEL, STEPSIZE, ARM_AXIS, SAMPLE_AXIS
 

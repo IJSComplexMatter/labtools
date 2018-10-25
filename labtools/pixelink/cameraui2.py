@@ -23,9 +23,9 @@ import numpy, os
 
 from labtools.utils.instrui import BaseDeviceUI, device_group, device_search_group, status_group
 
-from PxLAPI import *
-from PxLTypes import *
-from PxLCodes import *
+from .PxLAPI import *
+from .PxLTypes import *
+from .PxLCodes import *
 
 
 _NO_CAMERAS = 'No cameras found!'
@@ -46,7 +46,7 @@ _FORMAT_VALUES = ('MONO8',
                 'RGB24',
                 'RGB48')
 
-_FORMAT = dict(zip(_FORMAT_KEYS,_FORMAT_VALUES))
+_FORMAT = dict(list(zip(_FORMAT_KEYS,_FORMAT_VALUES)))
 
 
 _SINGLE_VALUED_FEATURES = {'gain' : FEATURE_GAIN,
@@ -226,7 +226,7 @@ class CameraUI(Camera,  BaseDeviceUI):
             if colors > 1:
                 shape += (colors,)
         except KeyError:
-            raise NotImplementedError, 'Unsupported format'  
+            raise NotImplementedError('Unsupported format')  
         return shape
     
     #@display_cls_error    
@@ -234,7 +234,7 @@ class CameraUI(Camera,  BaseDeviceUI):
         try:        
             return _DTYPE[self.format.value]
         except KeyError:
-            raise NotImplementedError, 'Unsupported format'        
+            raise NotImplementedError('Unsupported format')        
         
    
     def _search_fired(self):
@@ -295,7 +295,7 @@ class CameraUI(Camera,  BaseDeviceUI):
         """
         Initializes all single valued features to camera values
         """
-        for name, id in _SINGLE_VALUED_FEATURES.items():
+        for name, id in list(_SINGLE_VALUED_FEATURES.items()):
             feature = getattr(self, name)
             feature.low, feature.high = features[id]['params'][0]
             feature.value = self.get_feature(id)[0]

@@ -25,6 +25,6 @@ def configure(**kw):
     
     """
     from . import conf
-    for key, value in kw.iteritems():    
+    for key, value in kw.items():    
         getattr(conf, key)
         setattr(conf, key, value)

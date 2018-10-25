@@ -12,8 +12,8 @@ Not all functions are implemented, only those needed for a single image capture.
 Video not implemented yet. See Pixelink SDK manual for reference.
 """
 
-from PxLTypes import *
-from PxLCodes import PixelinkError
+from .PxLTypes import *
+from .PxLCodes import PixelinkError
 from .conf import PXL_LIB_NAME, SIMULATE
 from ._test import pxl as pxlt
 

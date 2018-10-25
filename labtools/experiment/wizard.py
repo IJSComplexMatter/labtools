@@ -35,7 +35,7 @@ from pyface.wizard.api import SimpleWizard, WizardPage
 from traits.api import Any, HasStrictTraits,Property, Int, Dict, List, Class, Str
 from traitsui.api import View
 
-from parameters import Generator
+from .parameters import Generator
 
 class SimpleWizardPage(WizardPage):
     """Wizard page that is used in SimpleWizard that is returned from
@@ -102,7 +102,7 @@ class Wizard(HasStrictTraits):
         
     def __wizards_default(self):
         #sorting is a dirty trick to make 'dls' the last of experiments
-        return sorted([klass(name = name) for name, klass in self.generators.iteritems()], key = lambda x: x.name)#, reverse = True)
+        return sorted([klass(name = name) for name, klass in self.generators.items()], key = lambda x: x.name)#, reverse = True)
        
     def _generators_default(self):
         return {'None' : Generator}

@@ -3,7 +3,7 @@ Error manipulation methods..
 """
 import sys
 import traceback
-from thread import get_ident
+from _thread import get_ident
 
 from pyface.api import error, warning, information
 from traits import trait_notifiers

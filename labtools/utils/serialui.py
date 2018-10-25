@@ -119,7 +119,7 @@ class SerialUI(BasePort):
     #: port bytesize
     bytesize = Enum(8, Serial.BYTESIZES)
     #: parity setting
-    parity = Trait('None', dict(zip(PARITY_NAMES.values(),PARITY_NAMES.keys())))
+    parity = Trait('None', dict(list(zip(list(PARITY_NAMES.values()),list(PARITY_NAMES.keys())))))
     #: stopbits setting
     stopbits = Enum(1, Serial.STOPBITS)
     

@@ -1,4 +1,4 @@
-from beam_profiler import BeamProfiler
+from .beam_profiler import BeamProfiler
 from labtools.utils.display_message import display_exception
 from traits.api import Enum, Instance,  Float, Any, Bool
 from labtools.log import create_logger

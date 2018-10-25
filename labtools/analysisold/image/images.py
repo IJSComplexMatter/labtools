@@ -62,8 +62,8 @@ class Images(HasTraits):
     def show_selection2(self):
         def plot(selection,color,index):
             s = selection
-            x,y = map(lambda *args : args, s.top_left, 
-                  s.top_right, s.bottom_right, s.bottom_left, s.top_left)
+            x,y = list(map(lambda *args : args, s.top_left, 
+                  s.top_right, s.bottom_right, s.bottom_left, s.top_left))
             self.figure.plot_data(x,y, str(index),color)
         for i in range(len(self.analysis.selections)+1):
             self.figure.del_plot(str(i))

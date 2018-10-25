@@ -39,7 +39,7 @@ SCALING_VALUES = (1, 0, 2, 3, 4)
 SCALING_NAMES = ('Normal', 'Off', 'Conservative', 'Secure', 'Fixed')
 
 #: all possible scalings are defined here
-SCALINGS = dict(zip(SCALING_NAMES, SCALING_VALUES))
+SCALINGS = dict(list(zip(SCALING_NAMES, SCALING_VALUES)))
 
 SETTABLES = SETTABLES + ['ALV_SOFTWARE_NAME']
 

@@ -25,53 +25,53 @@ def fit(f,data, indices = None):
        x = indices(data.shape)
     else:
         x = indices
-    fn= lambda p: ravel(f(*x,**dict(zip(pkey,p)))-data)
+    fn= lambda p: ravel(f(*x,**dict(list(zip(pkey,p))))-data)
     par, cov, info, mesg, success = optimize.leastsq(fn, pval, full_output = True )
 
     if success==1:
-        print "Converged"
+        print("Converged")
     else:
-        print "Not converged"
-        print mesg
+        print("Not converged")
+        print(mesg)
         return None
         
     # calculate final chi square
     chisq=sum(info["fvec"]*info["fvec"])
     dof=len(x)-len(pval)
     # chisq, sqrt(chisq/dof) agrees with gnuplot
-    print "Converged with chi squared ",chisq
-    print "degrees of freedom, dof ", dof
-    print "RMS of residuals (i.e. sqrt(chisq/dof)) ", sqrt(chisq/dof)
-    print "Reduced chisq (i.e. variance of residuals) ", chisq/dof
-    print
+    print("Converged with chi squared ",chisq)
+    print("degrees of freedom, dof ", dof)
+    print("RMS of residuals (i.e. sqrt(chisq/dof)) ", sqrt(chisq/dof))
+    print("Reduced chisq (i.e. variance of residuals) ", chisq/dof)
+    print()
 
     # uncertainties are calculated as per gnuplot, "fixing" the result
     # for non unit values of the reduced chisq.
     # values at min match gnuplot
-    print "Fitted parameters at minimum, with 68% C.I.:"
+    print("Fitted parameters at minimum, with 68% C.I.:")
     try:
-        parOut = zip(pkey,par)
+        parOut = list(zip(pkey,par))
     except TypeError:
-        parOut = zip(pkey,(par,))
+        parOut = list(zip(pkey,(par,)))
     for i,pmin in enumerate(parOut):
         try:
-            print "%2i %-10s %12f +/- %10f"%(i,pmin[0],pmin[1],sqrt(cov[i,i])*sqrt(chisq/dof))
+            print("%2i %-10s %12f +/- %10f"%(i,pmin[0],pmin[1],sqrt(cov[i,i])*sqrt(chisq/dof)))
         except:
             pass
-    print
-    print "Correlation matrix"
+    print()
+    print("Correlation matrix")
 
     ## # correlation matrix close to gnuplot
-    print "               ",
-    print pkey
+    print("               ", end=' ')
+    print(pkey)
     for i, key in enumerate(pkey):
 
         for j in range(i+1):
             try:
-                print "%10f"%(cov[i,j]/sqrt(cov[i,i]*cov[j,j]),),
+                print("%10f"%(cov[i,j]/sqrt(cov[i,i]*cov[j,j]),), end=' ')
             except:
                 pass
-        print 
+        print() 
 
     return dict(parOut)
 
@@ -116,7 +116,7 @@ class Function(object):
 
     def SetParameters(self,**kwds):
         self.parDict.update(kwds)
-        keys=[key for key in self.parDict.keys() if key not in self.constant]
+        keys=[key for key in list(self.parDict.keys()) if key not in self.constant]
         self.keys = tuple(keys)
         self.values=tuple([self.parDict[key] for key in self.keys])
 
@@ -138,12 +138,12 @@ class Function(object):
             for i,a in enumerate(args):
                 p[argList[i]]=a
         except IndexError:
-            print 'Samo f(x,y,z) je mozno uporabit'
+            print('Samo f(x,y,z) je mozno uporabit')
             raise
         try:
             return eval(self.funcStr,p)
         except:
-            print 'Ce uporabljas funkcijo vec spremenljivk, podaj vrednosti za vse spremenljivke in preveri ce so vsi parametri podani'
+            print('Ce uporabljas funkcijo vec spremenljivk, podaj vrednosti za vse spremenljivke in preveri ce so vsi parametri podani')
             raise
 
     def __repr__(self):
@@ -178,7 +178,7 @@ class Function2(Function):
         values = kwds[-1]
         nKeys = len(values)
         nArgs = len(names)
-        kwds = dict(zip(names[nArgs-nKeys:],values))
+        kwds = dict(list(zip(names[nArgs-nKeys:],values)))
         self.constant = constant
         self.SetParameters(**kwds)
 

@@ -171,7 +171,7 @@ class DlsAnalyzer(BaseFileAnalyzer):
         fname = self.selected
         self.fitter.open_dls(fname)
         self.fitter.function.reset()
-        print self.constants
+        print(self.constants)
         for constants in self.constants:
             try:
                 self.fitter.fit(constants = constants)
@@ -208,7 +208,7 @@ class DlsAnalyzer(BaseFileAnalyzer):
             array_names.append(name)
             array_names.append(name + '_err')
             
-        dtype = np.dtype(zip(array_names, ['float']*len(array_names)))
+        dtype = np.dtype(list(zip(array_names, ['float']*len(array_names))))
         self.results = StructArrayData(data = np.zeros(len(self.filenames), dtype = dtype))
         #self.results_err = StructArrayData(data = np.zeros(len(self.filenames), dtype = dtype))
         self.results.data_updated = True

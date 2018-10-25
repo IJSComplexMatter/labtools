@@ -9,7 +9,7 @@ from enthought.traits.ui.api import *
 from enthought.pyface.api import FileDialog, OK, ProgressDialog
 
 
-from format import AnyFormat, ExtFormat, BaseFormat
+from .format import AnyFormat, ExtFormat, BaseFormat
 import os
 import glob
 import re
@@ -61,8 +61,8 @@ def my_comp (x,y):
     def get_num(path):
         str = os.path.splitext(path)[0]
         try:
-            r = map(float,re.findall(r'[\d]*[.]{0,1}[\d]+',str))
-            print r
+            r = list(map(float,re.findall(r'[\d]*[.]{0,1}[\d]+',str)))
+            print(r)
             return r
         except:
             return path
@@ -319,7 +319,7 @@ class Images(Image):
     view = images_view 
                 
                 
-    def next(self):
+    def __next__(self):
         try:
             self.filename = self.filenames[self.next_index]
             self.next_index += 1
@@ -481,7 +481,7 @@ class Converter(BaseProcessor):
         if not os.path.exists(path) or self.overwrite:
             ExtFormat.save(path, image)
         else:
-            raise IOError, 'File exists'         
+            raise IOError('File exists')         
     
 
 if __name__ == '__main__':

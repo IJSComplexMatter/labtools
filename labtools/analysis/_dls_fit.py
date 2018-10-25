@@ -126,11 +126,11 @@ class DlsAnalyzer(BaseFileAnalyzer):
         if self.log_name and self.log:
             with open(self.log_name, 'w') as f:
                 f.write(self.log)
-                print self.log
+                print(self.log)
             
     def init(self):
         array_names = ['index'] + self.fitter.function.pnames
-        dtype = np.dtype(zip(array_names, ['float']*len(array_names)))
+        dtype = np.dtype(list(zip(array_names, ['float']*len(array_names))))
         self.results = StructArrayData(data = np.zeros(len(self.filenames), dtype = dtype))
         self.results_err = StructArrayData(data = np.zeros(len(self.filenames), dtype = dtype))
         self.results.data_updated = True

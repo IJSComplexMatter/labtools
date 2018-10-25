@@ -14,7 +14,7 @@ file called "labtools.ini", Program looks for labtools.ini is first  in your wor
 directory then in user's home directory.
 """
 
-import ConfigParser, os
+import configparser, os
 
 #: If specified, all instruments (drivers) will be simulated (for testing). Should be set to False
 SIMULATE = False
@@ -110,16 +110,16 @@ def update_conf(modname, names, globals):
     for fname in [CONF, DEFAULTCONF]:
         if os.path.exists(fname):
             g = globals
-            config = ConfigParser.ConfigParser()
+            config = configparser.ConfigParser()
             config.add_section(section)
             config.read(fname)
             for name in names:
                 try:
                     g[name] = safe_eval(config.get(section, name))
-                except ConfigParser.NoOptionError:
+                except configparser.NoOptionError:
                     pass
                 except:
-                    print 'Error in config file %s (%, %s), using default configuration.' % (fname, section, name)
+                    print('Error in config file %s (%, %s), using default configuration.' % (fname, section, name))
                     return
             return
 

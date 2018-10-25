@@ -52,7 +52,7 @@ class MercurySerial(SerialUI):
 class PLERawUI(BaseRawControllerUI):
     """This class can be used as C862. It adds a gui layer"""  
     logger = logger
-    device = Enum(range(16), desc = 'device number')
+    device = Enum(list(range(16)), desc = 'device number')
     def _serial_default(self):
         return MercurySerial(timeout = TIMEOUT)      
         
@@ -117,10 +117,10 @@ class PLERotatorUI(BaseMotorUI):
         self._moving = True
         self.serial.write('%dMA%d\r' % (self._axis, position * self._step))  
         
-        print 'move', _read_output(self.serial)   
+        print('move', _read_output(self.serial))   
     def home(self):
         self.serial.write('%dGH\r' % self._axis)  
-        print 'move', _read_output(self.serial)              
+        print('move', _read_output(self.serial))              
         
     def tell(self):
         self.serial.write('%dTP\r' % self._axis)
@@ -133,7 +133,7 @@ class PLERotatorUI(BaseMotorUI):
         """Needs to be defined in a subclass.
         """
         self.serial.write('%dDH\r' % self._axis)  
-        print 'set zero', _read_output(self.serial) 
+        print('set zero', _read_output(self.serial)) 
                            
     def close(self):
         self.serial.close()

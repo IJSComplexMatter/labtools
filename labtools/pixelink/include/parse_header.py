@@ -185,7 +185,7 @@ def create_definition(string):
     with open(OUTPUT,'w') as f:
         f.write(HEADER)
         structures = TYPES_RE.findall(string)
-        print structures
+        print(structures)
         for structure in structures:
             structdef, definition, name, extra = structure
             items = parse_items(definition)

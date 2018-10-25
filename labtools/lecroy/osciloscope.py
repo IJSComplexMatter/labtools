@@ -190,7 +190,7 @@ class LecroyOsciloscope(BaseDevice):
         logger.info('Collecting data')
         data = self.ask( name + ':' +  'WAVEFORM?').strip() # remove \r
         logger.info('Processing data')
-        return np.array(map(lambda x,y,z,w: int(x+y+z+w, 16), data[DATASTART:][::4], data[DATASTART:][1::4],data[DATASTART:][2::4], data[DATASTART:][3::4]), dtype = 'uint16')
+        return np.array(list(map(lambda x,y,z,w: int(x+y+z+w, 16), data[DATASTART:][::4], data[DATASTART:][1::4],data[DATASTART:][2::4], data[DATASTART:][3::4])), dtype = 'uint16')
            
 
 def _read(serial):

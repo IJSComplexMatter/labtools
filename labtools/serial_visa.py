@@ -32,7 +32,7 @@ def instrument(resource_name, **keyw):
     return SerialInstrument(resource_name, **keyw)
     
 def _warn_for_invalid_keyword_arguments(keyw, allowed_keys):
-    for key in keyw.iterkeys():
+    for key in keyw.keys():
         if key not in allowed_keys:
             warnings.warn("Keyword argument \"%s\" unknown" % key,
                           stacklevel = 3)
@@ -257,9 +257,9 @@ class SerialInstrument(object):
                 result = list(struct.unpack(endianess +
                                             str(data_length/8) + "d", data))
             else:
-                raise ValueError, "unknown data values format requested"
+                raise ValueError("unknown data values format requested")
         except struct.error:
-            raise InvalidBinaryFormat, "binary data itself was malformed"
+            raise InvalidBinaryFormat("binary data itself was malformed")
         return result
 
     def ask(self, message):

@@ -1,4 +1,4 @@
-import win32con
+from . import win32con
 
 from labtools.alv.conf import *
 from labtools.log import create_logger

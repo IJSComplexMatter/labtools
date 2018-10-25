@@ -169,10 +169,10 @@ class Rectangle(HasTraits):
             self.update()
         elif len(points) ==2:
             self._update = False
-            top_left = map(lambda x,y: min(x,y), *points)
-            bottom_right = map(lambda x,y: max(x,y), *points)
+            top_left = list(map(lambda x,y: min(x,y), *points))
+            bottom_right = list(map(lambda x,y: max(x,y), *points))
             self.center = tuple(map(lambda x,y: (y + x)/2., top_left, bottom_right))
-            self.width , self.height = map(lambda x,y: int(y-x), top_left, bottom_right)
+            self.width , self.height = list(map(lambda x,y: int(y-x), top_left, bottom_right))
             self._update = True
             self.update()
     
@@ -182,15 +182,15 @@ class Rectangle(HasTraits):
         
     def slice_image(self, image):
         size = image.shape[0:2]
-        xmin,ymin = map(lambda x,y: max(x,y), self.top_left, (0,0))
-        xmax,ymax = map(lambda x,y: 1+min(x,y-1), self.bottom_right, (size[1],size[0]))
+        xmin,ymin = list(map(lambda x,y: max(x,y), self.top_left, (0,0)))
+        xmax,ymax = list(map(lambda x,y: 1+min(x,y-1), self.bottom_right, (size[1],size[0])))
         im = image[ymin:ymax,xmin:xmax]
         return im
         
     def slice_indices(self, indices):
         size = indices.shape[-2:]
-        xmin,ymin = map(lambda x,y: max(x,y), self.top_left, (0,0))
-        xmax,ymax = map(lambda x,y: 1+min(x,y-1), self.bottom_right, (size[1],size[0]))
+        xmin,ymin = list(map(lambda x,y: max(x,y), self.top_left, (0,0)))
+        xmax,ymax = list(map(lambda x,y: 1+min(x,y-1), self.bottom_right, (size[1],size[0])))
         indices = indices[:,ymin:ymax,xmin:xmax]
         return indices
         
@@ -376,8 +376,8 @@ class ImageSelections(HasTraits):
     def show_selection2(self):
         def plot(selection,color,index):
             s = selection
-            x,y = map(lambda *args : args, s.top_left, 
-                  s.top_right, s.bottom_right, s.bottom_left, s.top_left)
+            x,y = list(map(lambda *args : args, s.top_left, 
+                  s.top_right, s.bottom_right, s.bottom_left, s.top_left))
             self.figure.plot_data(x,y, str(index),color)
         for i in range(len(self.analysis.selections)+1):
             self.figure.del_plot(str(i))

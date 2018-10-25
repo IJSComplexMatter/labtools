@@ -77,7 +77,7 @@ def configure(**kw):
     
     """
     import labtools.conf as conf
-    for key, value in kw.iteritems():    
+    for key, value in kw.items():    
         getattr(conf, key)
         setattr(conf, key, value)
 
@@ -109,7 +109,7 @@ def test_package(package, skip = (), verbose = False):
         if defined, it will print some additional messages when testing
     """
     import  os, pkgutil, doctest
-    print 'Testing package %s...' % package
+    print('Testing package %s...' % package)
     modules = [ __import__(package, fromlist = [package])]
     dirname, filename = os.path.split(modules[0].__file__)
     modnames = [package + '.' + name for _, name, _ in pkgutil.iter_modules([dirname])]
@@ -119,10 +119,10 @@ def test_package(package, skip = (), verbose = False):
     for mod in modules:
         fail, count = doctest.testmod(mod, verbose = verbose)
         if fail == 0 and verbose == False and count > 0:
-            print '%i tests of module `%s` passed.' % (count, mod.__name__) 
+            print('%i tests of module `%s` passed.' % (count, mod.__name__)) 
         fails += fail
         counts += count
-    print
+    print()
     return fails, count
 
 
@@ -148,12 +148,12 @@ def test(skip = (),verbose = False):
             fails += fail
             counts += count
         else:
-            print 'Skipping package `%s`' % package
+            print('Skipping package `%s`' % package)
 
     if fails == 0 and verbose == False:
-        print '\nPerformed %s tests. All tests OK!\n' % counts
+        print('\nPerformed %s tests. All tests OK!\n' % counts)
     elif fails > 0 and verbose  == False:
-        print '\n%s of %s tests failed!' % (fails,counts)
+        print('\n%s of %s tests failed!' % (fails,counts))
  
 def create_ini(fname = None):
     """Creates a default configuration file (labtools.ini)in user's directory.
@@ -167,7 +167,7 @@ def create_ini(fname = None):
     """
     
     import importlib
-    import ConfigParser
+    import configparser
     from labtools.conf import DEFAULTCONF, package_section
     
     INFO = \
@@ -192,18 +192,18 @@ def create_ini(fname = None):
 
 """    
     
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     config.optionxform = str #forc upper case, lower case by default when writing to file
     for package in CONFPACKAGES:
         mod = package + '.' + 'conf'
-        print 'Parsing', mod
+        print('Parsing', mod)
         section = package_section(mod)
         config.add_section(section)
         conf = importlib.import_module(mod)
         #reload(conf)
         for name in conf.SETTABLES:
             value = repr(getattr(conf, name))
-            print 'Setting: ', section, name, value
+            print('Setting: ', section, name, value)
             config.set(section, name, value)
     if fname is None:
         fname = DEFAULTCONF            

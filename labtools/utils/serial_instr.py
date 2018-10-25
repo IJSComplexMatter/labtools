@@ -1,5 +1,5 @@
 import serial
-from Queue import Queue
+from queue import Queue
 
 class EnhancedSerial(serial.Serial):
     r"""
@@ -57,7 +57,7 @@ class EnhancedSerial(serial.Serial):
                 for c in command:
                     super(EnhancedSerial,self).write(c)
                     if super(EnhancedSerial,self).read(1) != c:
-                        raise serial.SerialException, 'Command not echoed back!'
+                        raise serial.SerialException('Command not echoed back!')
             else:
                  super(EnhancedSerial,self).write(command)
         self._put_to_queue(worker)
@@ -73,7 +73,7 @@ class EnhancedSerial(serial.Serial):
                 super(EnhancedSerial,self).write(c)
                 if self.chr_echo:
                     if super(EnhancedSerial,self).read(1) != c:
-                        raise serial.SerialException, 'Command not echoed back!' 
+                        raise serial.SerialException('Command not echoed back!') 
             line = self._readline(eol, size)
             return line
         return self._put_to_queue(worker)

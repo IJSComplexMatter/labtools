@@ -120,7 +120,7 @@ class BeamProfiler(object):
         if set_zero == True:
             self.x.set_zero()
             time.sleep(1)
-            print self.x.tell()
+            print(self.x.tell())
         return x0
 
     def find_y_center(self, set_zero = False, p0 = None):
@@ -133,7 +133,7 @@ class BeamProfiler(object):
         if set_zero == True:
             self.y.set_zero()  
             time.sleep(1)
-            print self.y.tell()
+            print(self.y.tell())
         return y0     
     
     def _find_center(self, translator, p0):

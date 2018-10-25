@@ -48,12 +48,12 @@ def get_length(filenames, selections_name = 'selections.txt', select = True):
     cv.NamedWindow('Image') 
     
     for index, fname in enumerate(filenames):
-        print '%d of %d' % (index, len(filenames))
+        print('%d of %d' % (index, len(filenames)))
         mat = cv.LoadImageM(fname)
         #mattmp = cv.CreateMat(mat.rows,mat.cols,cv.CV_16SC3)
         #cv.Laplace(mat,mattmp,7)  
         #a = numpy.asarray(mattmp)
-        print '%s loaded' % fname
+        print('%s loaded' % fname)
 
         for i in range(2):
             rectangle =selections.analysis.selections[i]
@@ -86,7 +86,7 @@ def get_length(filenames, selections_name = 'selections.txt', select = True):
         
         rect2 = selections.analysis.selections[2] 
         vshift = ( -centers[2][1] + rect2.center[1])  
-        print 'fits done'
+        print('fits done')
         
         cv.Circle(mat, tuple(rect0.center),5,(2**15,0,2**15))
         cv.Circle(mat, tuple(rect1.center),5,(2**15,0,2**15))

@@ -236,6 +236,6 @@ class DLS_DataSelector(HasTraits):
         
 if __name__ == '__main__':
     d = DLS_DataSelector()
-    print d.filenames.filenames
+    print(d.filenames.filenames)
     d.configure_traits()
-    print 'done'
+    print('done')

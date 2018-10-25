@@ -39,7 +39,7 @@ class LED(wx.Control):
         try:
             self._colors[int(state)]
         except:
-            print 'invalid LED color state %s' % state 
+            print('invalid LED color state %s' % state) 
             i = -1
         else:
             i = state

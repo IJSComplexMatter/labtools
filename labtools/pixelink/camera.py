@@ -11,9 +11,9 @@ check pixelink SDK manual for details on function call and meaning.
 """
 
 import ctypes
-from PxLTypes import *
-from PxLCodes import ERRORS, PixelinkError
-from PxLAPI import *
+from .PxLTypes import *
+from .PxLCodes import ERRORS, PixelinkError
+from .PxLAPI import *
 import numpy as np
 from labtools.pixelink.conf import  LOGLEVEL, ENDIAN
 from labtools.log import create_logger
@@ -361,7 +361,7 @@ class Camera(BaseInstrument):
         elif length > 1:
             params = (c_float * len(values))(*values)
         else:
-            raise TypeError, 'values must be a list of values'
+            raise TypeError('values must be a list of values')
         execute(PxLSetFeature, self._handle, c_uint32(id), c_uint32(flags), c_uint32(len(values)), byref(params))
     
     @do_if_initialized

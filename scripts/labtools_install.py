@@ -61,7 +61,7 @@ def transform_shortcut(dat_dir, sc, prefix=None):
 def get_shortcuts(dat_path, prefix=None):
     """reads and parses the appinst data file and returns the shortcuts"""
     d = {}
-    execfile(dat_path, d)
+    exec(compile(open(dat_path).read(), dat_path, 'exec'), d)
 
     shortcuts = d['SHORTCUTS']
     for sc in shortcuts:

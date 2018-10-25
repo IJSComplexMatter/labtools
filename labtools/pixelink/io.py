@@ -22,7 +22,7 @@ from labtools.pixelink.conf import  LOGLEVEL
 
 logger = create_logger(__name__, LOGLEVEL)
 
-from PxLTypes import PXL_MAX_STROBES,PXL_MAX_KNEE_POINTS,\
+from .PxLTypes import PXL_MAX_STROBES,PXL_MAX_KNEE_POINTS,\
     PIXEL_FORMAT_MONO8,PIXEL_FORMAT_MONO16,\
     PIXEL_FORMAT_RGB24,PIXEL_FORMAT_RGB48,\
     PIXEL_FORMAT_BAYER8,PIXEL_FORMAT_BAYER16, CLIP_FORMAT_AVI
@@ -99,7 +99,7 @@ def open_bw(filename, size=(1024,1280), bits = 10,  data_offset = 0, as_float = 
     elif bits <= 16:
         dtype = 16
     else:
-        raise ValueError, 'bits must be between 1 and 16 '
+        raise ValueError('bits must be between 1 and 16 ')
     
     a = memmap(filename, dtype = DTYPE[dtype], mode = 'c', shape = size, offset = data_offset)
     a = a.newbyteorder(order)
@@ -111,8 +111,8 @@ def pds_to_avi(pdsname, aviname = None):
     """Converts pixelink data stream file to avi file.
     if aviname is not specified it is determined from input filename
     """
-    from PxLAPI import PxLFormatClip #import it here to report warnings here if SDK not installed
-    from PxLCodes import ERRORS
+    from .PxLAPI import PxLFormatClip #import it here to report warnings here if SDK not installed
+    from .PxLCodes import ERRORS
     
     if aviname is None:
         aviname, ext = os.path.splitext(pdsname) 
@@ -247,7 +247,7 @@ class PixelinkDataStream(object):
         self._offsets[self._index] = offset + im.size * im.dtype.itemsize 
         return desc, im
         
-    def next(self):
+    def __next__(self):
         if self._index  == self._n:  
             raise StopIteration
         logger.info('Reading frame %d' % self._index)

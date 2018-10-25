@@ -1,6 +1,6 @@
-import general, dls
-from dls import *
-from general import *
+from . import general, dls
+from .dls import *
+from .general import *
 
 import inspect
 import numpy
@@ -13,7 +13,7 @@ def test_fit_functions():
             f = getattr(cat, fname)
             spec = inspect.getargspec(f)
             args = list(numpy.random.rand(len(spec.args)))
-            defaults = dict(zip(spec.args, args))
+            defaults = dict(list(zip(spec.args, args)))
             g = globals()
             g.update(defaults)
             assert f(*args) == eval(f.__doc__.split('=')[1].strip(), g), "Docstring does not match fit function's definition\n%s\n\nError when evaluating %s!\n" % (f.__doc__, f.__name__)

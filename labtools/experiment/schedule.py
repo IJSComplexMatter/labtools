@@ -20,9 +20,9 @@ from traitsui.table_column \
 
 from pyface.api import FileDialog, OK, ImageResource
 
-from wizard import create_wizard, Wizard
-from parameters import Parameters
-from parameters import Generator
+from .wizard import create_wizard, Wizard
+from .parameters import Parameters
+from .parameters import Generator
 import os
 from labtools.conf import format_doctest
 from labtools.experiment.tools import write_schedule, read_schedule
@@ -31,9 +31,9 @@ class ListDictColumn(ListColumn):
     def get_value(self, obj):
         try:
             d = obj[self.index]
-            return d.to_dict().values()
+            return list(d.to_dict().values())
         except IndexError:
-            print 'index', self.index, 'not found'
+            print('index', self.index, 'not found')
             return None
     def get_drag_value(self, obj):
         return None

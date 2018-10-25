@@ -32,7 +32,7 @@ class DataPrinter(AbstractController):
                     
     def _process_default(self):
         def process(point0, point1):
-            print 'selection', point0, point1
+            print('selection', point0, point1)
         return process
                 
  
@@ -92,7 +92,7 @@ class Figure(HasTraits):
 
     def _process_selection_default(self):
         def process(point0, point1):
-            print 'selection', point0, point1
+            print('selection', point0, point1)
         return process
         
     def _pd_default(self):

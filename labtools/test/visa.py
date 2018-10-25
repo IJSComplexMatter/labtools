@@ -15,7 +15,7 @@ class Instrument():
     
     def write(self, command):
         if command.startswith("SENSe:VOLT:NPLCycles"):
-            print command
+            print(command)
             self.nplc = 1#int(command.strip("SENSe:VOLT:NPLCycles").strip())
     
     def ask(self,command):

@@ -230,7 +230,7 @@ class Camera(object):
         else:
             logger.info("Loading parameters from a file")
             if os.path.exists(fname):
-                fname = unicode(fname)#make sure it is unicode
+                fname = str(fname)#make sure it is unicode
                 execute(ueyelib.is_ParameterSet,self._handle,IS_PARAMETERSET_CMD_LOAD_FILE,fname)
             else:
                 execute(ueyelib.is_ParameterSet,self._handle,IS_PARAMETERSET_CMD_LOAD_FILE,None) #open file dialog

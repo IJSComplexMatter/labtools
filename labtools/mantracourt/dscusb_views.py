@@ -69,7 +69,7 @@ Group(
 label = 'Device', show_border = True),  
 Group(
   Item('temp', show_label = False, editor = DisplayEditor(alarm_name = 'temp_alarm'), height = 50), 
-  label = u'Temperature [C]', show_border = True
+  label = 'Temperature [C]', show_border = True
 ),
 Group(
   Group(

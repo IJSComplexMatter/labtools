@@ -152,7 +152,7 @@ class KeithleyControllerUI(KeithleyController,BaseInstrumentUI):
         if self.io_settings.instr == '':
             self.io_settings.instr = instr
         if self.io_settings.edit_traits(kind = 'livemodal'):
-            print 'OK'
+            print('OK')
             
     def start_readout(self):
         t = ReadThread(self)

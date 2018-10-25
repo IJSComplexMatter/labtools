@@ -187,7 +187,7 @@ class StandaTranslatorUI(StandaTranslator,BaseTranslatorUI):
         else:
             params0 = self.settings.get()
             params = usmc.get_parameters(self.device)
-            for key, value in params0.iteritems():
+            for key, value in params0.items():
                 params0[key] = params.get(key, value)
             self.settings.set(**params0)
                            

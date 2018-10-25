@@ -1,4 +1,0 @@
-Ce dodas kaksen modul funkcij posodobi __all__ list v __init__.py
-Prav tako mora imeti vsak modul FUNCTIONS list, kjer napisi tiste funkcije, ki zelis da so tretirane kot fit funkcije
-
-pozeni test.py, da preveris ce docstringi OK

@@ -34,7 +34,7 @@ class GaussianFilter(BaseFilter):
     
     def process(self, image):
         if self.sigma != 0.:
-            print 'processing gaussian'
+            print('processing gaussian')
             image = nd.gaussian_filter(image, self.sigma, **self.kw)
         return image
         

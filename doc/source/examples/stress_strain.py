@@ -56,7 +56,7 @@ def measure(positions = POSITIONS, sleep = SLEEP, n = NFORCE, interval = INTERVA
     dsc = DSCUSB() # creates an instance of DSCUSB for force measurements
     dsc.init() #initialize: open port and set things up.
     homepos = translator.tell() / 1000. # tell() returns microns
-    print 'Motor home position is %f' % homepos
+    print('Motor home position is %f' % homepos)
     
     if relative == True:
         # if we use relative positions, calculate absolute values first
@@ -70,15 +70,15 @@ def measure(positions = POSITIONS, sleep = SLEEP, n = NFORCE, interval = INTERVA
         
     try:
         for i, position in enumerate(abspositions):
-            print '\nPerforming measurement %i/%i' % (i + 1, len(positions))
-            print 'Moving translator to %.3f' % position
+            print('\nPerforming measurement %i/%i' % (i + 1, len(positions)))
+            print('Moving translator to %.3f' % position)
             translator.move(position * 1000.) # move takes position in microns
             translator.wait()
-            print 'Waiting for %.1f seconds' % sleep
+            print('Waiting for %.1f seconds' % sleep)
             time.sleep(sleep) # wait SLEEP seconds
-            print 'Measuring force %i times with interval %f seconds:' % (n, interval)
+            print('Measuring force %i times with interval %f seconds:' % (n, interval))
             force = dsc.get_force_list(n,interval)
-            print [f[1] for f in force]
+            print([f[1] for f in force])
             results.append([position] + [item for sublist in force for item in sublist])
 
             if ion == True:
@@ -86,16 +86,16 @@ def measure(positions = POSITIONS, sleep = SLEEP, n = NFORCE, interval = INTERVA
                 plot(data) 
                 
     except (KeyboardInterrupt, SystemExit):
-        print 'Moving back to start position %f' % homepos
+        print('Moving back to start position %f' % homepos)
         translator.move(homepos * 1000.)         #move to start position if program killed by user
         translator.wait()
         raise
         
-    print 'Moving back to start position %f' % homepos
+    print('Moving back to start position %f' % homepos)
     translator.move(homepos * 1000.)
     translator.wait()
     data = np.array(results)
-    print 'Done!'
+    print('Done!')
     return data
 
 def plot(data):
@@ -120,7 +120,7 @@ def display(data):
 def save(fname, data):
     """Saves data to text file
     """
-    print 'Saving results to "%s"' % fname
+    print('Saving results to "%s"' % fname)
     runs, cols = data.shape
     with open(fname,'w') as f:
         f.write('#Date: %s\n' % datetime.datetime.today())

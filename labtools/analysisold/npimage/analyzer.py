@@ -9,15 +9,15 @@ from enthought.traits.api import *
 from enthought.traits.ui.api import *
 from enthought.pyface.api import error
 
-from figure import Figure
+from .figure import Figure
 
 from scipy import *
 import numpy 
 from numpy import savetxt
 import os
-from tools import BaseProcessor
+from .tools import BaseProcessor
 
-from experiment import Experiment
+from .experiment import Experiment
 
 
 def save_data(base_name, data, folder = '', prepend_text = ''):
@@ -85,7 +85,7 @@ class ImageProcessor(BaseProcessor):
                     dtype = STATISTICS_DTYPE))                                           
             self.initial_fit.append(self.experiment.analysis.fitting.results.get_parameters())
             self.ok_to_fit.append(self.experiment.analysis.fitting.is_fitting)
-            print self.initial_fit
+            print(self.initial_fit)
 
 
     def process(self, image, i):
@@ -107,7 +107,7 @@ class ImageProcessor(BaseProcessor):
                     if self.experiment.analysis.fitting.message != '': break
                     
                 if self.experiment.analysis.fitting.message == '':
-                    for key, value in results.iteritems():
+                    for key, value in results.items():
                         self.fit_results[j][key][i] = value
                     self.initial_fit[j] = results
                 else:
@@ -149,7 +149,7 @@ class ControlPanel(HasTraits):
     @on_trait_change('image.array,image.experiment.analysis.selection.updated')
     def update_statistics(self,object,name,old,new):
         if self.image.is_open:
-            print 'updating'
+            print('updating')
             self.experiment.analysis.calc_statistics(self.image.array)
               
     
@@ -218,7 +218,7 @@ class MainWindow(HasTraits):
                 
     @on_trait_change('panel.experiment.points[]')
     def remove_boxes(self):
-        print 'removing'
+        print('removing')
         for i in range(len(self.panel.experiment.points)+1):
             self.figure.del_plot(str(i))
                 
@@ -226,8 +226,8 @@ class MainWindow(HasTraits):
     def show_selection2(self,object,name,old,new):
         def plot(selection,color,index):
             s = selection
-            x,y = map(lambda *args : args, s.top_left, 
-                  s.top_right, s.bottom_right, s.bottom_left, s.top_left)
+            x,y = list(map(lambda *args : args, s.top_left, 
+                  s.top_right, s.bottom_right, s.bottom_left, s.top_left))
             self.figure.plot_data(x,y, str(index),color)
         try:
             if object.update == False:

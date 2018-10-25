@@ -1,7 +1,7 @@
 from enthought.traits.api import HasTraits,Instance,Function,Button
 from enthought.traits.ui.api import View, Item
 
-from mpl_figure_editor import MPLFigureEditor
+from .mpl_figure_editor import MPLFigureEditor
 from matplotlib.figure import Figure as MPL_Figure
 from matplotlib.widgets import RectangleSelector
 from numpy import zeros

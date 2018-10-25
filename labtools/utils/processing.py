@@ -13,11 +13,11 @@ from traitsui.api import View, Item
 from pyface.timer.api import Timer
 
 from threading import Thread
-from Queue import Queue
+from queue import Queue
 import time, datetime
 
 from labtools.log import create_logger
-from display_message import display_message, error_message
+from .display_message import display_message, error_message
 
 log = create_logger(__name__)
 

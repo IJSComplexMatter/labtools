@@ -73,8 +73,8 @@ class Controller862(PIController):
     """
     
     def __init__(self, serial, ID = None, is_reversed = False,):
-        if ID not in [None] + range(16):
-            raise PIError, 'Invalid controller ID'
+        if ID not in [None] + list(range(16)):
+            raise PIError('Invalid controller ID')
         self.serial = serial
         self.ID = ID
         self.is_reversed = is_reversed
@@ -84,7 +84,7 @@ class Controller862(PIController):
         """
         Searches for all controllers connected to serial, returns a list if IDs
         """
-        controllers = range(16)
+        controllers = list(range(16))
         out = []
         serial.flushInput()
         for controller in controllers:
@@ -102,7 +102,7 @@ class Controller862(PIController):
         line = self.ask('TP')
         if not line:
             self.ID = None
-            raise PIError, "Controller '%s' not found" % str(ID)
+            raise PIError("Controller '%s' not found" % str(ID))
 
 
     def _set_command(self,command, ID):
@@ -130,7 +130,7 @@ class Controller862(PIController):
             if display is not None:
                 display(pos1)
             else:
-                print pos1            
+                print(pos1)            
             time.sleep(0.1)
             pos2 = self.tell_position()
             if pos2 == pos1:
@@ -292,32 +292,32 @@ def main():
         
     try:
         if options.tell:
-            print c.tell_position(as_string = True)
+            print(c.tell_position(as_string = True))
         elif options.home:
-            print 'Moving to home position'
+            print('Moving to home position')
             c.go_home()
             c.wait()
         elif options.define:
-            print 'Defining home position'
+            print('Defining home position')
             c.define_home()
         elif options.move is not None:
-            print 'Moving by %i steps' % options.move
+            print('Moving by %i steps' % options.move)
             c.move_relative(options.move)  
             c.wait()
         elif options.position is not None:
-            print 'Moving to absolute position %i' % options.position 
+            print('Moving to absolute position %i' % options.position) 
             c.move_absolute(options.position)
             c.wait()
         elif options.write:
-            print 'Executing raw string'
+            print('Executing raw string')
             out = c.ask(options.write)
             if out:
-                print out.strip()
+                print(out.strip())
             c.wait()
         else:
             parser.error("No commands given!")
     except:
-        print 'aborting'
+        print('aborting')
         c.abort()
     finally:
         s.close()

@@ -248,7 +248,7 @@ class Filenames(HasTraits):
         self.selected = self.filenames[value]
         
     def _get_basenames(self):
-        return map(os.path.basename, self.filenames)
+        return list(map(os.path.basename, self.filenames))
       
     def __getitem__(self, item):
         self.index = item
@@ -261,7 +261,7 @@ class Filenames(HasTraits):
         self._index = self.index
         return self
         
-    def next(self):
+    def __next__(self):
         try:
             self.index = self._index
             return self.selected
@@ -337,7 +337,7 @@ class BaseFileAnalyzer(HasTraits):
         self._index = self.index
         return self
         
-    def next(self):
+    def __next__(self):
         try:
             self.index = self._index
             return self.process_selected()

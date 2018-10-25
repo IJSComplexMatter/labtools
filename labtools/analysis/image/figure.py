@@ -49,7 +49,7 @@ class DataPrinter(AbstractController):
                     
     def _process_default(self):
         def process(point0, point1):
-            print 'selection', point0, point1
+            print('selection', point0, point1)
         return process
                 
  
@@ -132,7 +132,7 @@ class Figure(HasTraits):
 
     def _process_selection_default(self):
         def process(point0, point1):
-            print 'selection', point0, point1
+            print('selection', point0, point1)
         return process
         
     def _pd_default(self):
@@ -328,7 +328,7 @@ class FigureInspector(Figure):
         img_plot = self.plot.plots['image'][0]
         image_index = img_plot.index
         image_value = img_plot.value     
-        if image_index.metadata.has_key("selections"):
+        if "selections" in image_index.metadata:
             x_ndx, y_ndx = image_index.metadata["selections"]
             if y_ndx and x_ndx:
                 h_slice = image_value.data[y_ndx,:,0]

@@ -94,7 +94,7 @@ class DLS_Data(HasTraits):
         x1 = np.array([x[index]] * (self.data.shape[1]-1))
         y1 = []
         z1 = []
-        self.scalars = range(self.data.shape[1]-1)
+        self.scalars = list(range(self.data.shape[1]-1))
         hi_color =  2* max(self.scalars)    
         self.hi_color = hi_color
         
@@ -166,7 +166,7 @@ class DLS_Data(HasTraits):
         
         for i in range((self.data.shape[1]-1)):
             if self.red_glyphs.mlab_source.scalars[i] != self.hi_color:
-                print i
+                print(i)
                 cr_mean = self.cr[:,2*i+1].mean() 
                 n+=1
                 cr_sum+=cr_mean
@@ -204,7 +204,7 @@ class DLS_Data_Old(HasTraits):
         view = View(HGroup(VGroup('renormalized',Item('data_fig',style= 'custom', show_label = False),'cr_fig','corr_fig'), 
                     Item('usable_data',style = 'custom',show_label = False,
                          editor = CheckListEditor(
-                             values = map(str,self.possible_usable_data),
+                             values = list(map(str,self.possible_usable_data)),
                              cols = 1)
                              ),
                              ), 
@@ -213,15 +213,15 @@ class DLS_Data_Old(HasTraits):
         return view
         
     def _usable_data_default(self):
-        return map(str,range(self.data.shape[1]-1))
+        return list(map(str,list(range(self.data.shape[1]-1))))
         
     def _possible_usable_data_default(self):
-        return map(str,range(self.data.shape[1]-1))   
+        return list(map(str,list(range(self.data.shape[1]-1))))   
         
       
     def plot_data(self):
         x = np.log10(self.data[:,0])
-        width = map(lambda x: int(str(x) in self.usable_data), range(self.data.shape[1]-1))
+        width = [int(str(x) in self.usable_data) for x in range(self.data.shape[1]-1)]
         self.data_fig.ax.cla()
         for i in range(self.data.shape[1]-1):
             if self.renormalized == True:
@@ -253,7 +253,7 @@ class DLS_Data_Old(HasTraits):
     @on_trait_change('usable_data[]')         
     def plot_cr(self):
         x = self.cr[:,0]
-        width = map(lambda x: int(str(x) in self.usable_data), range(self.data.shape[1]-1))
+        width = [int(str(x) in self.usable_data) for x in range(self.data.shape[1]-1)]
         self.cr_fig.ax.cla()
         for i in range((self.cr.shape[1]-1)/2):
             z = self.cr[:,1 + 2*i]
@@ -300,14 +300,14 @@ def group_dls_data(directory = '', pattern = '*.ASC', output = 'data', size = 10
     files = glob.glob(os.path.join(directory,pattern))
     data = open_dls_group(files, size)
     for i,d in enumerate(data):
-        print 'creating data'
+        print('creating data')
         dat = DLS_Data_Old(data = d[0], cr = d[1])
-        print 'opening window'
+        print('opening window')
         dat.configure_traits()
-        print 'calculating'
+        print('calculating')
         dat.calculate()
         fname = os.path.join(directory, output + str(i) + '.npy')
-        print 'saving data+'
+        print('saving data+')
         dat.save(fname)
         
 if __name__ == '__main__':

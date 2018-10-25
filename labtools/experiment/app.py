@@ -10,7 +10,7 @@ from traitsui.api import View, Item,  Group, spring ,\
 from pyface.api import confirm, YES
 
 #from labtools.utils.logger import get_logger, init_logger
-from schedule import Schedule, SimpleSchedule, file_menu, edit_menu, ScheduleHandler,\
+from .schedule import Schedule, SimpleSchedule, file_menu, edit_menu, ScheduleHandler,\
      create_schedule_action, open_schedule_action, save_schedule_action, add_column_action, remove_column_action
 
 from labtools.utils.display_message import display_message as display_dialog
@@ -411,7 +411,7 @@ class Settings(HasTraits):
         return self.available_instruments[0]
         
     def _get__generators(self):
-        return self.generators.keys()
+        return list(self.generators.keys())
     
     def _instrument_changed(self, value):
         try:
@@ -519,7 +519,7 @@ class Experiment(SimpleExperiment):
         
     @cached_property           
     def _get__instruments(self):
-        return self.instruments.values()
+        return list(self.instruments.values())
         
     @on_trait_change('object.settings.updated')
     def _update_schedule_generators(self):
