@@ -426,9 +426,9 @@ def _read_output(serial):
     to make sure that everything was read out properly.
     """
     c = None
-    s = ''
+    s = b''
     logger.debug('Reading output from serial port %s' % serial.port)
-    while ((not s.endswith('\x03')) and c != '') or serial.inWaiting() > 0:
+    while ((not s.endswith(b'\x03')) and c != b'') or serial.inWaiting() > 0:
         c = serial.read(max(1,serial.inWaiting())) #read at least one char.
         s+= c
     return s
@@ -444,18 +444,18 @@ def _format_output(string, command):
     [0, 10, 79]
     """
     logger.debug('Formatting output %s' % string)
-    s = string.strip('\x03').strip() #remove white chars
+    s = string.strip(b'\x03').strip() #remove white chars
     try:
-        id, value = s.split(':')
-        if value == '':
+        id, value = s.split(b':')
+        if value == b'':
             raise InstrError('Unexpected string "%s" received. Possible timeout error.' %s)
     except ValueError:
         raise InstrError('Unexpected string "%s" received' %s)
     else:
         identifier = IDENTIFIERS.get(command)
-        if id[0] ==  identifier and value != '': #id can be multichar, just check first one
-            if id in ('S','C','Z'): #these are in hex format, so convert to int
-                values = [int('0x'+v,0) for v in value.split()]   
+        if id[0] ==  identifier and value != b'': #id can be multichar, just check first one
+            if id in (b'S',b'C',b'Z'): #these are in hex format, so convert to int
+                values = [int(b'0x'+v,0) for v in value.split()]   
             else:
                 values = [int(v) for v in value.split()]
             if len(values) > 1 :
@@ -489,7 +489,7 @@ def _ask_value(serial, ID, command):
     out = _ask(serial, ID, command)
     return _format_output(out, command)
     
-def _format_command(command, ID):
+def _format_command(command, ID, encoding = "utf-8"):
     r"""
     Formats a mercury command for a given controller ID. The formatted command
     can the be used to write to the device. In principle it adds the device address
@@ -503,7 +503,11 @@ def _format_command(command, ID):
     """
     if len(command) != 1:
         command += '\r'
-    return b'\x01' + hex(ID)[-1] + command
+    command = hex(ID)[-1] + command
+    if isinstance(command, bytes):
+    	return b'\x01' + command
+    else:
+        return b'\x01' + bytes(command, encoding)
         
 def main(options):
     """Main program for PI control. Options must be a valid ArgumentParser options
