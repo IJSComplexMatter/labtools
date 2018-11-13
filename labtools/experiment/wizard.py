@@ -32,7 +32,7 @@ Classes and functions
 """
 
 from pyface.wizard.api import SimpleWizard, WizardPage
-from traits.api import Any, HasStrictTraits,Property, Int, Dict, List, Class, Str
+from traits.api import Any, HasStrictTraits,Property, Int, Dict, List,  Str
 from traitsui.api import View
 
 from .parameters import Generator
@@ -74,7 +74,8 @@ def create_wizard(pages, parent = None, title = 'Wizard'):
 
 class Wizard(HasStrictTraits):
     n_runs = Int(10)
-    generators = Dict(key = Str, value = Class)
+    #generators = Dict(key = Str, value = Class)
+    generators = Dict(key = Str, value = Any)
     available_names = Property(List, depends_on = 'generators')
     _wizards = List()
     

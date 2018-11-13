@@ -9,7 +9,7 @@ This module defines objects for experimental schedule generation.
 
 from traits.api \
     import HasStrictTraits, List, Property,Enum,Int,\
-    Button, Instance, File, on_trait_change, Directory,  Dict,  Str, Class
+    Button, Instance, File, on_trait_change, Directory,  Dict,  Str
     
 from traitsui.api \
     import View, Group, Item, TableEditor, VSplit, HGroup,\
@@ -31,7 +31,7 @@ class ListDictColumn(ListColumn):
     def get_value(self, obj):
         try:
             d = obj[self.index]
-            return list(d.to_dict().values())
+            return repr(list(d.to_dict().values()))
         except IndexError:
             print('index', self.index, 'not found')
             return None
@@ -57,11 +57,11 @@ def create_table_editor(columns, other, row_factory):
             #selected_indices = 'object.indices',                            
             deletable   = True,
             editable  = True,
-            reorderable = True,
+            reorderable = False,
             configurable = False, 
-            auto_size   = False,
+            auto_size   = True,
             #show_row_labels = True,
-            #sortable = True,
+            sortable = False,
             orientation = 'vertical',
             row_factory = row_factory,
             #row_factory_args = [{} for i in range(len(columns))],

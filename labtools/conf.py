@@ -34,6 +34,7 @@ SKIPGUI = True
 #: configuration filename
 CONF = 'labtools.ini'
 
+
 def format_doctest(obj, **kw):
     """
     """

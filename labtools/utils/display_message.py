@@ -74,17 +74,34 @@ def display_message(message, level, gui = True, title = None):
             #if GUI is not running just pass
             pass    
   
+#def display_on_exception(logger, message):
+#    def _display_on_exception(funct):
+#        def _funct(self,*args,**kw):
+#            try:
+#                return funct(self,*args,**kw)
+#            except Exception as e:
+#                m = message
+#                if m != '':
+#                    m = m + ' ' + str(e)
+#                else:
+#                    m = str(e)
+#                logger.error(m)
+#                display_message(m, 'error')
+#                raise e
+#        return _funct
+#    return _display_on_exception
+
 def display_on_exception(logger, message):
     def _display_on_exception(funct):
-        def _funct(self,*args,**kw):
+        def _funct(*args,**kw):
             try:
-                return funct(self,*args,**kw)
+                return funct(*args,**kw)
             except Exception as e:
                 m = message
                 if m != '':
-                    m = m + ' ' + e.message
+                    m = m + ' ' + str(e)
                 else:
-                    m = e.message
+                    m = str(e)
                 logger.error(m)
                 display_message(m, 'error')
                 raise e
@@ -99,9 +116,9 @@ def display_on_exception_f(logger, message):
             except Exception as e:
                 m = message
                 if m != '':
-                    m = m + ' ' + e.message
+                    m = m + ' ' + str(e)
                 else:
-                    m = e.message
+                    m = str(e)
                 logger.error(m)
                 display_message(m, 'error')
                 raise e
@@ -116,9 +133,9 @@ def display_exception(message):
             except Exception as e:
                 m = message
                 if m != '':
-                    m = m + ' ' + e.message
+                    m = m + ' ' + str(e)
                 else:
-                    m = e.message
+                    m = str(e)
                 self.logger.error(m)
                 display_message(m, 'error')
                 raise e

@@ -52,6 +52,7 @@ instead:
 
 __version__ = '0.2.0'
 
+
 def configure(**kw):
     """Configures strethcer package. It sets constants defined in moodule :mod:`.conf`
     This function should be called prior to importing any modules from this package.

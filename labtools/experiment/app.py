@@ -24,8 +24,8 @@ import os, datetime
 from labtools.log import create_logger
 from labtools.experiment.conf import *
 
-from traitsui.wx.extra.windows.ie_html_editor \
-    import IEHTMLEditor
+#from traitsui.wx.extra.windows.ie_html_editor \
+#    import IEHTMLEditor
 
 log = create_logger(__name__)
 
@@ -59,40 +59,40 @@ run_menu = Menu(start_measurement_action,stop_measurement_action, name = '&Run')
 
 help_menu = Menu(open_documentation_action,open_quickstart_action, name = '&Help')
 
-class WebPage ( HasTraits ):
-
-    # The URL to display:
-    url = Str( 'http://code.enthought.com' )
-
-    # The page title:
-    title = Str
-
-    # The page status:
-    status = Str
-
-    # The browser navigation buttons:
-    back    = Button( '<--' )
-    forward = Button( '-->' )
-    home    = Button( 'Home' )
-    stop    = Button( 'Stop' )
-    refresh = Button( 'Refresh' )
-    search  = Button( 'Search' )
-
-    # The view to display:
-    view = View(
-        HGroup( 'back', 'forward', 'home', 'stop', 'refresh', 'search', '_',
-                Item( 'status', style = 'readonly' ),
-                show_labels = False
-        ),
-        Item( 'url',
-              show_label = False,
-              editor     = IEHTMLEditor(
-                               home    = 'home',    back   = 'back',
-                               forward = 'forward', stop   = 'stop',
-                               refresh = 'refresh', search = 'search',
-                               title   = 'title',   status = 'status' )
-        )
-    )
+#class WebPage ( HasTraits ):
+#
+#    # The URL to display:
+#    url = Str( 'http://code.enthought.com' )
+#
+#    # The page title:
+#    title = Str
+#
+#    # The page status:
+#    status = Str
+#
+#    # The browser navigation buttons:
+#    back    = Button( '<--' )
+#    forward = Button( '-->' )
+#    home    = Button( 'Home' )
+#    stop    = Button( 'Stop' )
+#    refresh = Button( 'Refresh' )
+#    search  = Button( 'Search' )
+#
+#    # The view to display:
+#    view = View(
+#        HGroup( 'back', 'forward', 'home', 'stop', 'refresh', 'search', '_',
+#                Item( 'status', style = 'readonly' ),
+#                show_labels = False
+#        ),
+#        Item( 'url',
+#              show_label = False,
+#              editor     = IEHTMLEditor(
+#                               home    = 'home',    back   = 'back',
+#                               forward = 'forward', stop   = 'stop',
+#                               refresh = 'refresh', search = 'search',
+#                               title   = 'title',   status = 'status' )
+#        )
+#    )
 
 
 #: output data delimiter
@@ -245,9 +245,9 @@ class SimpleExperiment(HasTraits):
             try:
                 result = instrument.simulate(self, i, measurement)
             except IOError as e:
-                stat.append((inst, e.message, True))
+                stat.append((inst, str(e), True))
             except Exception as e:
-                stat.append((inst, e.message, False))
+                stat.append((inst, str(e), False))
         return stat
             
     def start(self):

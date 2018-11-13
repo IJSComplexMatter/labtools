@@ -21,7 +21,7 @@ from serial import Serial
 from serial.tools.list_ports import comports
 from labtools.log import create_logger
 from .conf import TIMEOUT,STATUS_MESSAGES, STEPSIZE, LOGLEVEL
-
+from functools import reduce
 from queue import Queue
 from functools import reduce
 
@@ -30,15 +30,17 @@ logger = create_logger(__name__, LOGLEVEL)
 def checksum(st):
     """Performs checksum of a command
     """
-    return reduce(lambda x,y:x+y, list(map(ord, st)))
+    return reduce(lambda x,y:x+y, [c for c in bytearray(st)])
+    #return reduce(lambda x,y:x+y, list(map(ord, st)))
 
 def create_command(address = 1, number = 0, typ = 0, motor = 0, value = 0):
     """
     Returns a TCM command in BIN format. See tmcm-310 manual for details.
     """
     commands = (address, number, typ, motor, value)
-    s = struct.pack('>BBBBi', *commands)
-    s += chr(checksum(s) % 256)
+    s = bytearray(9) #length 9 byte array
+    s[0:-1] = struct.pack('>BBBBi', *commands)
+    s[-1] = (checksum(s) % 256)
     logger.debug('Command %s created from address %d, number %d, typ %d, motor %d, value %d' \
               % (repr(s), address, number, typ, motor, value))
     return s
@@ -213,7 +215,7 @@ class TMCM310(object):
                 raise TMCMError('Device %i not found in any port' % self.device)
             self.serial.port = port
             self.serial.open()
-        self._info  = _ask_bin(self.serial, self.device, 136,0) #read firmware version in string format
+        self._info  = str(_ask_bin(self.serial, self.device, 136,0)) #read firmware version in string format
         self._initialized = True 
 
     def _serial_default(self):

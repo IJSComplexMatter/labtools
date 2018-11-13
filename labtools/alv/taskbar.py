@@ -65,12 +65,13 @@ class ALVControllerFrame(wx.Frame):
     def _copy_to_clipboard(self, handle,text):
         """Copies text data to ALV cliboard
         """
-        text = str(text) #make sure it is a valid string Unicode doesnt work with ALV
+        #text = str(text) #make sure it is a valid string Unicode doesnt work with ALV
+        text = text.encode("utf-8")
         log.debug('Opening clipboard')
         win32clipboard.OpenClipboard(handle)
         win32clipboard.EmptyClipboard()
-        log.debug('Setting clipboard data "%s"' % str(text))
-        win32clipboard.SetClipboardData(win32con.CF_TEXT,str(text))
+        log.debug('Setting clipboard data "%s"' % text)
+        win32clipboard.SetClipboardData(win32con.CF_TEXT,text)
         win32clipboard.CloseClipboard()
         log.debug('Clipboard closed')
         

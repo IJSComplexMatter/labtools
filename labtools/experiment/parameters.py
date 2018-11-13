@@ -57,7 +57,7 @@ True
 """
 
 
-from traits.api import Class,  HasStrictTraits,  Str, Range, Int
+from traits.api import Any,  HasStrictTraits,  Str, Range, Int
 from traitsui.api import View, Item
 
 class Parameters(HasStrictTraits):
@@ -96,7 +96,8 @@ class Generator(HasStrictTraits):
     #: name of the instrument
     name = Str
     #: a parameters class, for generation of measurements list
-    parameters = Class(Parameters)
+    parameters = Any(Parameters)
+    #parameters = Class(Parameters)
     
     def default_traits_view(self):
         names = self.copyable_trait_names()
