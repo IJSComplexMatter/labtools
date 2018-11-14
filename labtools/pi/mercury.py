@@ -201,7 +201,7 @@ class C862(BaseDevice):
             self.serial.open()
         version = _ask(self.serial, self.device, 'VE') #read version
         _write(self.serial, self.device, 'EF') #echo off
-        self._info = version[version.find('Ver.'):].strip('\x03').strip() #only store last part
+        self._info = version[version.find(b'Ver.'):].strip(b'\x03').strip() #only store last part
         self._initialized = True  
 
     def new_axis(self, device):
@@ -453,7 +453,7 @@ def _format_output(string, command):
         raise InstrError('Unexpected string "%s" received' %s)
     else:
         identifier = IDENTIFIERS.get(command)
-        if id[0] ==  identifier and value != b'': #id can be multichar, just check first one
+        if id[0] ==  identifier[0] and value != b'': #id can be multichar, just check first one
             if id in (b'S',b'C',b'Z'): #these are in hex format, so convert to int
                 values = [int(b'0x'+v,0) for v in value.split()]   
             else:
