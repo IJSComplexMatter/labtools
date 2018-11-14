@@ -21,31 +21,30 @@ STEPSIZE = 0.5 / (2000 * (28./12.)**4 )
 thread pitch divided by sensor resolution and gear ratio
 """
 #: command identifiers, see PI manual for details
-IDENTIFIERS = {'?'  : 'E',
-               '('  : 'F',
-               '%'  : 'S',
-               '#'  : 'H',
-               "'"  : 'P',
-#               '\\'  : 'Z', #only in firmware 8.4+
-               'TD' : 'N',
-               'TV' : 'V',
-               'TF' : 'F',
-               'TT' : 'T',
-               'TP' : 'P',
-               'TE' : 'E',
-               'TL' : 'L',
-               'TY' : 'Y',
-               'TS' : 'S',
-               'TI' : 'X',
-               'TC' : 'H',
-               'TB' : 'B',
-               'TA' : 'A',
-               'GL' : 'M',
-               'GD' : 'D',
-               'GI' : 'I',
-               'GP' : 'G',
-               'TD' : 'N',
-               'CS' : 'C'
+IDENTIFIERS = {'?'  : b'E',
+               '('  : b'F',
+               '%'  : b'S',
+               '#'  : b'H',
+               "'"  : b'P',
+#               '\\'  : b'Z', #only in firmware 8.4+
+               'TD' : b'N',
+               'TV' : b'V',
+               'TF' : b'F',
+               'TT' : b'T',
+               'TP' : b'P',
+               'TE' : b'E',
+               'TL' : b'L',
+               'TY' : b'Y',
+               'TS' : b'S',
+               'TI' : b'X',
+               'TC' : b'H',
+               'TB' : b'B',
+               'TA' : b'A',
+               'GL' : b'M',
+               'GD' : b'D',
+               'GI' : b'I',
+               'GP' : b'G',
+               'CS' : b'C'
                }
 
 #: PI status flag descriptions. See PI manual for details
