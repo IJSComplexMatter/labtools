@@ -70,7 +70,7 @@ class KeithleyController(object):
     """
     # set to True when initialized
     _initialized = False
-    _queue = Queue(1) 
+    _queue = Queue(1)
     _info = 'Unknown'
     
     #: visa instrument instance. Use this only for direct communication
@@ -114,12 +114,13 @@ class KeithleyController(object):
         logger.info('Initializing Keithley')
         self.close()
         try:
+            rm = visa.ResourceManager()
             if instr is not None:
-                self.instr = visa.instrument(instr)
+                self.instr = rm.open_resource(instr)
             else:
-                instr = visa.get_instruments_list()[0]
-                self.instr = visa.instrument(instr, timeout = timeout)
-                self._info = self.instr.ask('*IDN?')
+                instr = rm.list_resources()[0]
+                self.instr = rm.open_resource(instr, timeout = timeout)
+            self._info = self.instr.query('*IDN?')
         except visa.VisaIOError:
             raise KeithleyError('Could not find keithley!')
         
@@ -135,12 +136,15 @@ class KeithleyController(object):
         """Thread safe write command
         """
         return self._process(self.instr.write, (command,))
-        
-    @do_when_initialized     
-    def ask(self, command):
-        """Thread safe ask command
+
+    @do_when_initialized
+    def query(self, command):
+        """Thread safe query command
+        removes CRLF and special characters
         """
-        return self._process(self.instr.ask, (command,))        
+        return self._process(self.instr.query, (command,)).strip('\r\n\x13\x11')
+
+    ask = query  # Substituted by query (PyVisa > v1.5)
                         
     def _measure_read_speed(self):
         """Measures max speed at which measurements can be read from the device
@@ -245,7 +249,7 @@ def parse_data(data):
     list, so this fenction  returns an arary of length n, where n is the number 
     of samples that were obtained.
     
-    >>> parse_data('+1.213E-01VDC,anything,anythin,anything')
+    >>> parse_data('+1.213E-01VDC,anything,anything,anything')
     array([ 0.1213])
     
     """
@@ -254,12 +258,12 @@ def parse_data(data):
         value = np.array([data_from_string(d)[0] for d in data[0::4]])
         time = data[1::4]
         date = data[2::4]
-        id = data[3::4]  
+        id = data[3::4]
     except Exception as e:
         raise KeithleyError('Error parsing output data')
         
     return value
-  
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
