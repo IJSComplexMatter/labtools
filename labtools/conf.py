@@ -17,7 +17,7 @@ directory then in user's home directory.
 import configparser, os
 
 #: If specified, all instruments (drivers) will be simulated (for testing). Should be set to False
-SIMULATE = True
+SIMULATE = False
 
 #: Logging level, set to 'DEBUG' or 'INFO' to display messages in console. For debugging mainly...
 LOGLEVEL = 'ERROR'

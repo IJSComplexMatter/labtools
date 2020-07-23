@@ -15,20 +15,22 @@ Some custom editors are defined here. These are:
 
 from traitsui.editor_factory \
     import EditorFactory
+    
+from traitsui.basic_editor_factory import BasicEditorFactory
 
 from traitsui.api import BooleanEditor
 LEDEditor = BooleanEditor
 
-# from traits.etsconfig.api import ETSConfig
-# if ETSConfig.toolkit == 'wx':
-#     from traitsui.wx.extra.led_editor import LEDEditor
-# else:
-#     from traitsui.qt4.extra.led_editor import LEDEditor
+from traits.etsconfig.api import ETSConfig
+if ETSConfig.toolkit == 'wx':
+    from traitsui.wx.extra.led_editor import _LEDEditor as _DisplayEditor
+else:
+    from traitsui.qt4.extra.led_editor import _LEDEditor as _DisplayEditor
     
-from traits.api import Color, Bool, Str
+from traits.api import Color, Bool, Str, Any, Undefined
 
             
-class DisplayEditor(EditorFactory):
+class DisplayEditor(BasicEditorFactory):
     """A custom LED editor for float, int, str values. It changes color
     when alarm trait is activated. Colors can be defined.
     
@@ -45,8 +47,10 @@ class DisplayEditor(EditorFactory):
              
     >>> t = Test()
     >>> ok = t.configure_traits() # %(skip)s
-"""
-   # klass = _DisplayEditor
+    """
+    klass = _DisplayEditor
+    
+    alignment = Any(Undefined)
     
     #: trait name for alarm bool, which triggers an alarm color for display
     alarm_name = Str()
@@ -57,5 +61,6 @@ class DisplayEditor(EditorFactory):
 
 from ..conf import SKIPGUI
 if SKIPGUI:
-    DisplayEditor.__doc__ = DisplayEditor.__doc__  % {'skip' : 'doctest: +SKIP'}
+    pass
+    #DisplayEditor.__doc__ = DisplayEditor.__doc__  % {'skip' : 'doctest: +SKIP'}
     #LEDEditor.__doc__ = LEDEditor.__doc__  % {'skip' : 'doctest: +SKIP'}
