@@ -29,6 +29,35 @@ else:
     
 from traits.api import Color, Bool, Str, Any, Undefined
 
+try:
+    from traitsui.qt4.editor import Editor
+    from labtools.utils.qt_led_widget import QLed
+    
+    class _LEDEditor(Editor):
+        def init(self, parent, color = QLed.Green):
+            self.control = QLed(onColour=color)
+            #self.control.setSegmentStyle(QtGui.QLCDNumber.Flat)
+            self.set_tooltip()
+    
+        def update_editor(self):
+            try:
+                value = int(self.value)%7 
+            except:
+                #in case we are not dealing with integers
+                value = bool(self.value)
+                
+            self.control.onColour = value
+            self.control.value = bool(value)
+    
+    class LEDEditor(BasicEditorFactory):
+    
+        #: The editor class to be created
+        klass = _LEDEditor
+        #: Alignment is not supported for QT backend
+        alignment = Any(Undefined)
+except:
+    LEDEditor = BooleanEditor
+
             
 class DisplayEditor(BasicEditorFactory):
     """A custom LED editor for float, int, str values. It changes color
@@ -59,8 +88,19 @@ class DisplayEditor(BasicEditorFactory):
     #: alarm color of the display
     alarm_color = Color('red')
 
-from ..conf import SKIPGUI
+from labtools.conf import SKIPGUI
 if SKIPGUI:
     pass
     #DisplayEditor.__doc__ = DisplayEditor.__doc__  % {'skip' : 'doctest: +SKIP'}
     #LEDEditor.__doc__ = LEDEditor.__doc__  % {'skip' : 'doctest: +SKIP'}
+    
+    
+if __name__ == "__main__":
+    from traits.api import *
+    from traitsui.api import *
+    class LED(HasTraits):
+        i = Str()
+        view = View(HSplit("i",Item("i",editor = LEDEditor())))
+        
+    t = LED()
+    t.configure_traits()
