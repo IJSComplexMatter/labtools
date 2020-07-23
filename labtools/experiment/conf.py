@@ -20,6 +20,7 @@ AVAILABLE_INSTRUMENTS = ['labtools.experiment.instr.standa._StandaTranslator',
                         'labtools.experiment.instr.pi._C862Translator',
                          'labtools.experiment.instr.dls._ALV',
                          'labtools.experiment.instr.dls._Rotator',
+                         'labtools.experiment.instr.dls._Arm',
                          'labtools.experiment.instr.keithley._Keithley',
                          'labtools.experiment.instr.keithley._KeithleyForce',
                          'labtools.experiment.instr.coherent._CoherentPowerMeter' 

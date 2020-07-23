@@ -17,8 +17,13 @@ from traitsui.editor_factory \
     import EditorFactory
 
 from traitsui.api import BooleanEditor
-
 LEDEditor = BooleanEditor
+
+# from traits.etsconfig.api import ETSConfig
+# if ETSConfig.toolkit == 'wx':
+#     from traitsui.wx.extra.led_editor import LEDEditor
+# else:
+#     from traitsui.qt4.extra.led_editor import LEDEditor
     
 from traits.api import Color, Bool, Str
 
@@ -53,4 +58,4 @@ class DisplayEditor(EditorFactory):
 from ..conf import SKIPGUI
 if SKIPGUI:
     DisplayEditor.__doc__ = DisplayEditor.__doc__  % {'skip' : 'doctest: +SKIP'}
-    LEDEditor.__doc__ = LEDEditor.__doc__  % {'skip' : 'doctest: +SKIP'}
+    #LEDEditor.__doc__ = LEDEditor.__doc__  % {'skip' : 'doctest: +SKIP'}

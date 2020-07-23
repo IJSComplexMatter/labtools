@@ -138,7 +138,7 @@ def message_getter(queue, send_queue):
     app.MainLoop()
     
 if SIMULATE == True:
-    from ._test.taskbar import message_getter
+    from labtools.alv._test.taskbar import message_getter
     
 if __name__ == '__main__':
     from multiprocessing import Queue

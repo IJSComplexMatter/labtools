@@ -43,6 +43,10 @@ def open_gui(module, gui, splash = 'splash', text_color = 'white', text_location
     with contextlib.closing(gui()) as s:
         splash_screen.close()
         s.configure_traits()
+        
+def dls_simple_gui():
+    """Opens DLS runner GUI"""
+    open_gui('labtools.experiment.dls_app','DLSSimpleUI', 'dls-splash')
 
 def dls_gui():
     """Opens DLS runner GUI"""

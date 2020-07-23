@@ -44,3 +44,5 @@ SCALINGS = dict(list(zip(SCALING_NAMES, SCALING_VALUES)))
 SETTABLES = SETTABLES + ['ALV_SOFTWARE_NAME']
 
 update_conf(__name__, SETTABLES , globals())
+
+SIMULATE = True

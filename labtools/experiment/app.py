@@ -10,7 +10,7 @@ from traitsui.api import View, Item,  Group, spring ,\
 from pyface.api import confirm, YES
 
 #from labtools.utils.logger import get_logger, init_logger
-from .schedule import Schedule, SimpleSchedule, file_menu, edit_menu, ScheduleHandler,\
+from labtools.experiment.schedule import Schedule, SimpleSchedule, file_menu, edit_menu, ScheduleHandler,\
      create_schedule_action, open_schedule_action, save_schedule_action, add_column_action, remove_column_action
 
 from labtools.utils.display_message import display_message as display_dialog

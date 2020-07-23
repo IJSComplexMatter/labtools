@@ -2,6 +2,8 @@ from traits.api import  Float, Int, Range, Bool, Str, Enum
 from labtools.alv.controllerui import ALVUI
 from labtools.alv.conf import SCALING_NAMES
 from labtools.trinamic.rotatorui import RotatorUI
+
+
 from labtools.utils.custom_traits import PInt
 from labtools.experiment.parameters import Parameters, Generator
 from labtools.experiment.instr.conf import ALV_NAME, ROTATOR_NAME
@@ -59,12 +61,41 @@ class _ALV(ALVUI):
         if os.path.exists(fname) == True:
             raise IOError('%s exists!' % fname )        
         return fname  
+    
+class _ArmParameters(Parameters):    
+    arm = Float(40., desc = 'arm start position in degrees')
 
+class _ArmGenerator(Generator):
+    name = ROTATOR_NAME
+    parameters = _ArmParameters
+    arm = Float(40., desc = 'arm start position in degrees')
+    step = Float(0., desc = 'step size in degrees')
+    
+    def create(self, n_runs, **kw):
+        return [self.get_parameters(arm = self.arm + self.step * i) for i in range(n_runs)]
+
+class _Arm(RotatorUI):
+    def run(self, obj,  index, parameters, **kw):
+        self._arm_target_position.value = parameters.arm
+        self.arm.move(parameters.arm)
+        self.arm.wait()
+        return parameters.arm    
+ 
+    def simulate(self, obj,  index, parameters, **kw):
+        try:
+            self._arm_target_position.value = parameters.arm
+        except:
+            raise ValueError('Invalid arm coordinate %f' % parameters.arm)
+        try:
+            self._sample_target_position.value = parameters.sample
+        except:
+            raise ValueError('Invalid sample coordinate %f' % parameters.sample)
+        return parameters.arm, parameters.sample
+    
 class  _RotatorParameters(Parameters):
     arm = Float(40., desc = 'arm start position in degrees')
     sample = Float(0., desc = 'sample start position in degrees')   
     
-
 class _RotatorGenerator(Generator):
     name = ROTATOR_NAME
     parameters = _RotatorParameters

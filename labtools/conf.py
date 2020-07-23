@@ -17,7 +17,7 @@ directory then in user's home directory.
 import configparser, os
 
 #: If specified, all instruments (drivers) will be simulated (for testing). Should be set to False
-SIMULATE = False
+SIMULATE = True
 
 #: Logging level, set to 'DEBUG' or 'INFO' to display messages in console. For debugging mainly...
 LOGLEVEL = 'ERROR'
@@ -33,7 +33,6 @@ SKIPGUI = True
 
 #: configuration filename
 CONF = 'labtools.ini'
-
 
 def format_doctest(obj, **kw):
     """
@@ -145,6 +144,7 @@ SETTABLES = ['SIMULATE', 'LOGLEVEL','POWERUSER']
 
 #update constants in this module from the ones in the ini file
 update_conf(__name__, SETTABLES, globals())
+
 
 if __name__ == '__main__':
     import doctest

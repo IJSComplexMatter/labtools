@@ -1,4 +1,4 @@
-from .mercury import C862Translator, C862, find_port, TIMEOUT, Serial
+from labtools.pi.mercury import C862Translator, C862, find_port, TIMEOUT, Serial
 from labtools.utils.display_message import display_exception
 from labtools.utils.translatorui import BaseTranslatorUI
 from labtools.utils.instrui import BaseRawControllerUI
