@@ -97,8 +97,9 @@ HGroup(spring,
 )
 
 #: view group for current position in degrees
-current_degrees_group = Group(
+current_degrees_group = HGroup(
     Item('_position_str', show_label = False, editor = DisplayEditor(alarm_name = '_alarm'), height = 50, width = 200), 
+    spring,
     Item('zero_button', show_label = False, enabled_when = '_initialized'),
     label = 'Current position [deg]', show_border = True
 )   

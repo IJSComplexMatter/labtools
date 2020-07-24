@@ -20,7 +20,6 @@ from labtools.conf import *
 
 #: Here a string identifier for alv software is specified. Must be a valid software name.
 ALV_SOFTWARE_NAME = 'ALV-5000/E Correlator for WINDOWS-NT 4.0'
-ALV_SOFTWARE_NAME = 'ALV-7004 Correlator Software for WIN'
 
 #some of ALV messages are registered here
 SET_START_MSG = win32api.RegisterWindowMessage('ALV5000_SET_START')
