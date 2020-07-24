@@ -448,19 +448,14 @@ def _format_output(string, command):
     s = string.strip('\x03').strip() #remove white chars
     try:
         id, value = s.split(':')
-        #id = id.decode('utf-8')
-        #value = value.decode('utf-8')
         if value == '':
             raise InstrError('Unexpected string "%s" received. Possible timeout error.' %s)
     except ValueError:
         raise InstrError('Unexpected string "%s" received' %s)
     else:
-        print(command)
-        
+
         identifier = IDENTIFIERS.get(command)
-        #print(identifier)
-        #print(id, value)
-        #1/0
+
         if id[0] ==  identifier and value != '': #id can be multichar, just check first one
             if id in ('S','C','Z'): #these are in hex format, so convert to int
                 values = [int('0x'+v,0) for v in value.split()]   
