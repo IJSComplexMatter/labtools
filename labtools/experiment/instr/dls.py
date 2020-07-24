@@ -2,6 +2,7 @@ from traits.api import  Float, Int, Range, Bool, Str, Enum
 from labtools.alv.controllerui import ALVUI
 from labtools.alv.conf import SCALING_NAMES
 from labtools.trinamic.rotatorui import RotatorUI
+from labtools.pi.mercuryui import C862RotatorUI
 
 
 from labtools.utils.custom_traits import PInt
@@ -74,23 +75,20 @@ class _ArmGenerator(Generator):
     def create(self, n_runs, **kw):
         return [self.get_parameters(arm = self.arm + self.step * i) for i in range(n_runs)]
 
-class _Arm(RotatorUI):
+class _Arm(C862RotatorUI):
     def run(self, obj,  index, parameters, **kw):
-        self._arm_target_position.value = parameters.arm
-        self.arm.move(parameters.arm)
-        self.arm.wait()
+        self._target_position.value = parameters.arm
+        self.move(parameters.arm)
+        self.wait()
         return parameters.arm    
  
     def simulate(self, obj,  index, parameters, **kw):
         try:
-            self._arm_target_position.value = parameters.arm
+            self._target_position.value = parameters.arm
         except:
             raise ValueError('Invalid arm coordinate %f' % parameters.arm)
-        try:
-            self._sample_target_position.value = parameters.sample
-        except:
-            raise ValueError('Invalid sample coordinate %f' % parameters.sample)
-        return parameters.arm, parameters.sample
+
+        return parameters.arm
     
 class  _RotatorParameters(Parameters):
     arm = Float(40., desc = 'arm start position in degrees')

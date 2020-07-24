@@ -98,11 +98,15 @@ HGroup(spring,
 
 #: view group for current position in degrees
 current_degrees_group = Group(
-    Item('_position_str', show_label = False, editor = DisplayEditor(alarm_name = '_alarm'), height = 50), 
+    Item('_position_str', show_label = False, editor = DisplayEditor(alarm_name = '_alarm'), height = 50, width = 200), 
     Item('zero_button', show_label = False, enabled_when = '_initialized'),
     label = 'Current position [deg]', show_border = True
 )   
-         
+     
+
+base_motor_ui_view = View(Group(device_group, target_degrees_group, current_degrees_group, status_group), title = 'Motor controller')   
+    
+    
 class BaseMotorUI(BaseDeviceUI):
     """This class can be used as a base for all motor devices.
     See also :class:`.BaseTranslatorUI`
@@ -121,8 +125,7 @@ class BaseMotorUI(BaseDeviceUI):
     home_button = Button('Home', desc = 'move to zero commad')
     
     #view = View(Group(*base_translator_view_groups), title = 'Translator controller')
-    view = View(Group(device_group, target_degrees_group, current_degrees_group, status_group), title = 'Motor controller')   
-    
+    view = base_motor_ui_view 
     #-------------------------------------------------
     # Methods that should not be defined in a subclass
     #-------------------------------------------------

@@ -1,6 +1,6 @@
-from labtools.pi.mercury import C862Translator, C862, find_port, TIMEOUT, Serial
+from labtools.pi.mercury import C862Translator, C862, find_port, TIMEOUT, Serial, C862Rotator
 from labtools.utils.display_message import display_exception
-from labtools.utils.translatorui import BaseTranslatorUI
+from labtools.utils.translatorui import BaseTranslatorUI, base_motor_ui_view
 from labtools.utils.instrui import BaseRawControllerUI
 from labtools.utils.serialui import SerialUI
 from labtools.pi.conf import LOGLEVEL
@@ -112,12 +112,15 @@ class C862TranslatorUI(C862Translator,BaseTranslatorUI):
         self.step = p.pop('step')
         self.set_parameters(**p)
         
+class C862RotatorUI(C862Rotator,C862TranslatorUI):
+    view = base_motor_ui_view
+        
 def gui():
     """Runs translator GUI
     """ 
     logger.info('Running translattor gui.')
     import contextlib
-    with contextlib.closing(C862TranslatorUI()) as ax:
+    with contextlib.closing(C862RotatorUI()) as ax:
         ax.configure_traits()
 
 if __name__ == '__main__':

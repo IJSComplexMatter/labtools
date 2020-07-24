@@ -7,7 +7,7 @@ class Serial():
     def __init__(self, port = None, timeout = None, bytesize = None, stopbits = None, baudrate = 9600):
         self.timeout = timeout
         self.port = port
-        self._read = ''
+        self._read = b''
         self._vlt = 0.
         self._tmp = 70.
         self._position = 0
@@ -32,22 +32,23 @@ class Serial():
         return out
     
     def write(self, command):
+        print(command)
         if self.port == 'COM1':
-            commands = command.split(',')
+            commands = command.split(b',')
             for i, command in enumerate(commands):
                 if i == 0:
-                    command = command.strip('\x010')
-                if command == 'TB\r':
-                    self._read = 'B:0000\r\n\x03'
-                elif command == 'VE\r':
-                    self._read = 'Krneki Ver. 8.40 Test'
-                elif command == 'TP\r' or command == "'":
-                    self._read = 'P:+%i\r\n\x03' % self._position
-                elif command == '%' or command == 'TS\r':
-                    self._read = 'S:00 00 00 00 00 00\r\n\x03' 
-                elif command.startswith('MA'):
-                    self._position = int(command.split('MA')[1])
-                elif command.startswith('DH') or command.startswith('GH'):
+                    command = command.strip(b'\x010')
+                if command == b'TB\r':
+                    self._read = b'B:0000\r\n\x03'
+                elif command == b'VE\r':
+                    self._read = b'Krneki Ver. 8.40 Test'
+                elif command == b'TP\r' or command == b"'":
+                    self._read = b'P:+%i\r\n\x03' % self._position
+                elif command == b'%' or command == b'TS\r':
+                    self._read = b'S:00 00 00 00 00 00\r\n\x03' 
+                elif command.startswith(b'MA'):
+                    self._position = int(command.split(b'MA')[1])
+                elif command.startswith(b'DH') or command.startswith(b'GH'):
                     self._position = 0
                     
                 

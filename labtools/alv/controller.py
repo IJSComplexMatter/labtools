@@ -31,8 +31,6 @@ from labtools.utils.decorators import simple_decorator
 from labtools.alv.taskbar import message_getter
 from labtools.alv.conf import *
 
-SIMULATE = False
-
 if SIMULATE == True:
     from labtools.alv._test import win32api, win32gui
 else:
