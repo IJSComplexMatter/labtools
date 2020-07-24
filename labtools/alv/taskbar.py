@@ -22,8 +22,10 @@ from labtools.log import create_logger
 from threading import Thread
 
 from labtools.alv.conf import *
+SIMULATE = False
 
 if SIMULATE == True:
+    1/0
     from labtools.alv._test import win32api, win32con,  win32gui, win32clipboard
 else:
     import win32api, win32con,  win32gui, win32clipboard

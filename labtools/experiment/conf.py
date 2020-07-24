@@ -28,4 +28,5 @@ AVAILABLE_INSTRUMENTS = ['labtools.experiment.instr.standa._StandaTranslator',
 
 SETTABLES = SETTABLES + ['AVAILABLE_INSTRUMENTS']
 
+
 update_conf(__name__, SETTABLES , globals())

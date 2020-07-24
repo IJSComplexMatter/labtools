@@ -47,6 +47,33 @@ IDENTIFIERS = {'?'  : b'E',
                'CS' : b'C'
                }
 
+IDENTIFIERS = {'?'  : 'E',
+               '('  : 'F',
+               '%'  : 'S',
+               '#'  : 'H',
+               "'"  : 'P',
+#               '\\'  : b'Z', #only in firmware 8.4+
+               'TD' : 'N',
+               'TV' : 'V',
+               'TF' : 'F',
+               'TT' : 'T',
+               'TP' : 'P',
+               'TE' : 'E',
+               'TL' : 'L',
+               'TY' : 'Y',
+               'TS' : 'S',
+               'TI' : 'X',
+               'TC' : 'H',
+               'TB' : 'B',
+               'TA' : 'A',
+               'GL' : 'M',
+               'GD' : 'D',
+               'GI' : 'I',
+               'GP' : 'G',
+               'CS' : 'C'
+               }
+
+
 #: PI status flag descriptions. See PI manual for details
 FLAG_DESC = (
 ('Busy', 

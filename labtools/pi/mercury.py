@@ -59,7 +59,7 @@ def find_port(device, timeout = 0.02):
         except:
             logger.info('Could not open port %s.' % (port))
         else:
-            if device in list_axes(s):
+            if device in list(list_axes(s)):
                 return port
         finally:
             s.close()
@@ -199,7 +199,7 @@ class C862(BaseDevice):
                 raise InstrError('Device %i not found in any port' % self.device)
             self.serial.port = port
             self.serial.open()
-        version = _ask(self.serial, self.device, 'VE').decode("utf-8") #read version
+        version = _ask(self.serial, self.device, 'VE') #read version
         _write(self.serial, self.device, 'EF') #echo off
         self._info = version[version.find('Ver.'):].strip('\x03').strip() #only store last part
         self._initialized = True  
@@ -431,7 +431,8 @@ def _read_output(serial):
     while ((not s.endswith(b'\x03')) and c != b'') or serial.inWaiting() > 0:
         c = serial.read(max(1,serial.inWaiting())) #read at least one char.
         s+= c
-    return s
+    
+    return s.decode("utf-8")
 
 def _format_output(string, command):
     r"""Convert raw string data to integer or a list of integers (for multiple data),
@@ -444,20 +445,25 @@ def _format_output(string, command):
     [0, 10, 79]
     """
     logger.debug('Formatting output %s' % string)
-    s = string.strip(b'\x03').strip() #remove white chars
+    s = string.strip('\x03').strip() #remove white chars
     try:
-        id, value = s.split(b':')
-        id = id.decode('utf-8')
-        value = value.decode('utf-8')
+        id, value = s.split(':')
+        #id = id.decode('utf-8')
+        #value = value.decode('utf-8')
         if value == '':
             raise InstrError('Unexpected string "%s" received. Possible timeout error.' %s)
     except ValueError:
         raise InstrError('Unexpected string "%s" received' %s)
     else:
+        print(command)
+        
         identifier = IDENTIFIERS.get(command)
-        if id[0] ==  identifier and value != b'': #id can be multichar, just check first one
+        #print(identifier)
+        #print(id, value)
+        #1/0
+        if id[0] ==  identifier and value != '': #id can be multichar, just check first one
             if id in ('S','C','Z'): #these are in hex format, so convert to int
-                values = [int(b'0x'+v,0) for v in value.split()]   
+                values = [int('0x'+v,0) for v in value.split()]   
             else:
                 values = [int(v) for v in value.split()]
             if len(values) > 1 :
@@ -470,13 +476,13 @@ def _format_output(string, command):
 def _write(serial, ID, command):
     command = _format_command(command,ID)
     logger.debug('Sending command %s' % command)
-    serial.write(command)
+    serial.write(bytes(command, "utf-8"))
 
 def _ask(serial, ID, command):
     #serial.read(serial.inWaiting()) #clear first
     command = _format_command(command,ID)
     logger.debug('Sending command %s' % command)
-    serial.write(command)
+    serial.write(bytes(command, "utf-8"))
     out = _read_output(serial)
     return _remove_echo(out, command[2:])
     
@@ -491,7 +497,7 @@ def _ask_value(serial, ID, command):
     out = _ask(serial, ID, command)
     return _format_output(out, command)
     
-def _format_command(command, ID, encoding = "utf-8"):
+def _format_command(command, ID):
     r"""
     Formats a mercury command for a given controller ID. The formatted command
     can the be used to write to the device. In principle it adds the device address
@@ -505,12 +511,9 @@ def _format_command(command, ID, encoding = "utf-8"):
     """
     if len(command) != 1:
         command += '\r'
-    command = hex(ID)[-1] + command
-    if isinstance(command, bytes):
-    	return b'\x01' + command
-    else:
-        return b'\x01' + bytes(command, encoding)
-        
+    command = hex(ID)[-1]+ command
+    return '\x01' + command
+
 def main(options):
     """Main program for PI control. Options must be a valid ArgumentParser options
     as returnd by parse_args. It must define the following attributes:
@@ -559,6 +562,9 @@ def main(options):
 
 class C862Rotator(C862Translator):
     pass
+
+'''class C862Rotator(C862Translator):
+    pass'''
         
 #if __name__=='__main__':
 #    import doctest
