@@ -556,10 +556,7 @@ def main(options):
 
 
 class C862Rotator(C862Translator):
-    pass
-
-'''class C862Rotator(C862Translator):
-    pass'''
+    step = 4*STEPSIZE
         
 #if __name__=='__main__':
 #    import doctest
